@@ -42,7 +42,11 @@
     <tr>
         <td>{{ movie.title }}</td>
         <td>{{ movie.synopsis }}</td>
-        <td>{{ (movie.rates|sum(attribute='value'))/movie.rates.__len__() }}</td>
+        {% if movie.rates.__len__() > 0 %}
+            <td>{{ (movie.rates|sum(attribute='value'))/movie.rates.__len__() }}</td>
+        {% else %}
+             <td>No rates</td>
+        {% endif %}
         <td>
             <form method="post" action="{{ url_for('rate_movie', movie_id=movie.id) }}">
                 <input type="number" name="value">
@@ -53,6 +57,8 @@
     {% endfor %}
     </tbody>
 </table>
+{% else %}
+    <p>No movies</p>
 {% endif %}
 </body>
 </html>
