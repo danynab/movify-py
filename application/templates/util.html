@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<h2>Register movie</h2>
+
+<form method="post" action="{{ url_for('save_movie') }}">
+    Title: <input type="text" name="title">
+    <br>
+    Synopsis: <input type="text" name="synopsis">
+    <br>
+    Year: <input type="number" name="year">
+    <br>
+    Time: <input type="text" name="time">
+    <br>
+    Director: <input type="text" name="director">
+    <br>
+    Cast: <input type="text" name="cast">
+    <br>
+    Genre: <input type="text" name="genre">
+    <br>
+    Url: <input type="text" name="url">
+    <br>
+    <input type="submit" value="Save Movie">
+</form>
+<h2>Movies</h2>
+{% if movies %}
+<table>
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Rating</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for movie in movies %}
+    <tr>
+        <td>{{ movie.title }}</td>
+        <td>{{ movie.synopsis }}</td>
+        <td>{{ (movie.rates|sum(attribute='value'))/movie.rates.__len__() }}</td>
+        <td>
+            <form method="post" action="{{ url_for('rate_movie', movie_id=movie.id) }}">
+                <input type="number" name="value">
+                <input type="submit" value="Rate">
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+</body>
+</html>

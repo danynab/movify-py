@@ -9,6 +9,10 @@ def get(username):
     return user_persistence.get(username)
 
 
+def get_all():
+    return user_persistence.get_all()
+
+
 def register(username, password, email, first_name, last_name):
     user = get(username)
     if user is not None:

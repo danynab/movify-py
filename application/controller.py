@@ -1,6 +1,6 @@
 from application import app, prefix
-from flask import redirect, request, render_template
-from application.services import user_service
+from flask import redirect, request, render_template, url_for
+from application.services import user_service, movie_service, rate_service
 
 __author__ = 'Dani Meana'
 
@@ -30,6 +30,8 @@ def init():
     db.create_all()
     return "Tables created"
 
+
+# Users
 
 @app.route(prefix + "/login", methods=["GET"])
 def show_login():
@@ -67,3 +69,42 @@ def do_register():
         return "Success. User registered" if user is not None else "Username already registered"
     else:
         return "Passwords not equals"
+
+
+# Movies
+
+@app.route(prefix + "/movies", methods=["GET"])
+def show_movies():
+    movies = movie_service.get_all()
+    return render_template('util.html', movies=movies)
+
+
+@app.route(prefix + "/movies", methods=["POST"])
+def save_movie():
+    title = request.form["title"]
+    synopsis = request.form["synopsis"]
+    year = request.form["year"]
+    time = request.form["time"]
+    director = request.form["director"]
+    cast = request.form["cast"]
+    genre = request.form["genre"]
+    url = request.form["url"]
+    movie = movie_service.save(title, synopsis, year, time, director, cast, genre, url)
+    return redirect(url_for("show_movies"))
+
+
+@app.route(prefix + "/movies/<int:movie_id>/rates", methods=["POST"])
+def rate_movie(movie_id):
+    value = request.form["value"]
+    users = user_service.get_all()
+    user = users[users.__len__()-1]
+    rate = rate_service.rate_movie(movie_id, user.username, value)
+    return redirect(url_for("show_movies"))
+
+
+# UTIL
+
+@app.route(prefix + "/util", methods=["GET"])
+def show_util():
+    movies = movie_service.get_all()
+    return render_template('util.html', movies=movies)
