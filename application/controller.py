@@ -63,7 +63,7 @@ def do_register():
     if password.__len__() == 0:
         return "Password can not be empty"
     if password_check == password:
-        success = user_service.register(username, password, email, first_name, last_name)
-        return "Success. User registered" if success else "Username already registered"
+        user = user_service.register(username, password, email, first_name, last_name)
+        return "Success. User registered" if user is not None else "Username already registered"
     else:
         return "Passwords not equals"

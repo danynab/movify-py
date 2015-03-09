@@ -1,6 +1,6 @@
 from application import db
 
-__author__ = 'Daniel Meana'
+__author__ = 'Dani Meana'
 
 
 class User(db.Model):
