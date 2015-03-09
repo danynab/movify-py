@@ -1,4 +1,4 @@
-from application import app
+from application import app, prefix
 from flask import redirect, request, render_template
 from application.services import user_service
 
@@ -17,12 +17,12 @@ def print_ip(response):
     return response
 
 
-@app.route("/", methods=["GET"])
+@app.route(prefix + "/", methods=["GET"])
 def home():
     return redirect("https://github.com/danynab/movify-py")
 
 
-@app.route("/init")
+@app.route(prefix + "/init")
 def init():
     from application import db
 
@@ -31,12 +31,12 @@ def init():
     return "Tables created"
 
 
-@app.route("/login", methods=["GET"])
+@app.route(prefix + "/login", methods=["GET"])
 def show_login():
     return render_template('login.html')
 
 
-@app.route("/login", methods=["POST"])
+@app.route(prefix + "/login", methods=["POST"])
 def do_login():
     username = request.form["username"]
     password = request.form["password"]
@@ -47,12 +47,12 @@ def do_login():
         return 'Username or password is not correct'
 
 
-@app.route("/register", methods=["GET"])
+@app.route(prefix + "/register", methods=["GET"])
 def show_register():
     return render_template('register.html')
 
 
-@app.route("/register", methods=["POST"])
+@app.route(prefix + "/register", methods=["POST"])
 def do_register():
     username = request.form["username"]
     password = request.form["password"]
