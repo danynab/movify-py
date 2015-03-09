@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Movify</title>
+</head>
+<body>
+<h2>Register</h2>
+
+<form method="post" action="{{ url_for('do_register') }}">
+    First name: <input type="text" name="first_name">
+    <br>
+    Last name: <input type="text" name="last_name">
+    <br>
+    Email: <input type="text" name="email">
+    <br>
+    Username: <input type="text" name="username">
+    <br>
+    Password: <input type="password" name="password">
+    <br>
+    Check password: <input type="password" name="password_check">
+    <br>
+    <input type="submit" value="Register">
+</form>
+</body>
+</html>

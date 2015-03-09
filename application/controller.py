@@ -1,5 +1,6 @@
 from application import app
-from flask import redirect, request
+from flask import redirect, request, render_template
+from application.services import user_service
 
 __author__ = 'Dani Meana'
 
@@ -17,5 +18,52 @@ def print_ip(response):
 
 
 @app.route("/", methods=["GET"])
-def hello():
+def home():
     return redirect("https://github.com/danynab/movify-py")
+
+
+@app.route("/init")
+def init():
+    from application import db
+
+    db.drop_all()
+    db.create_all()
+    return "Tables created"
+
+
+@app.route("/login", methods=["GET"])
+def show_login():
+    return render_template('login.html')
+
+
+@app.route("/login", methods=["POST"])
+def do_login():
+    username = request.form["username"]
+    password = request.form["password"]
+    user = user_service.login(username, password)
+    if user is not None:
+        return 'Login successful'
+    else:
+        return 'Username or password is not correct'
+
+
+@app.route("/register", methods=["GET"])
+def show_register():
+    return render_template('register.html')
+
+
+@app.route("/register", methods=["POST"])
+def do_register():
+    username = request.form["username"]
+    password = request.form["password"]
+    password_check = request.form["password_check"]
+    email = request.form["email"]
+    first_name = request.form["first_name"]
+    last_name = request.form["last_name"]
+    if password.__len__() == 0:
+        return "Password can not be empty"
+    if password_check == password:
+        success = user_service.register(username, password, email, first_name, last_name)
+        return "Success. User registered" if success else "Username already registered"
+    else:
+        return "Passwords not equals"

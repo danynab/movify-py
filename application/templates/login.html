@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Log in - Movify</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/skeleton.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logo-black.png') }}">
+</head>
+<body>
+  <header id="login-header">
+    <img src="{{ url_for('static', filename='images/logo-black.png') }}" alt="Movify logo" />
+    <h1>Movify</h1>
+  </header>
+
+  <div id="form-container" class="container">
+    <form method="post" action="{{ url_for('do_login') }}">
+      <input class="u-full-width" type="text" name="username" placeholder="username" autocomplete="off" required="true">
+      <input class="u-full-width" type="password" name="password" placeholder="password" required="true">
+
+      <input class="u-full-width" type="submit" value="Log in">
+    </form>
+    <a href="#">Forgot your password?</a>
+    <p>Don't have an account? <a href="{{ url_for('show_register') }}">Sign up</a></p>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="{{ url_for('static', filename='js/parallax.js') }}"></script>
+</body>
+</html>
