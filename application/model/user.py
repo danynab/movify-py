@@ -6,7 +6,7 @@ __author__ = 'Dani Meana'
 class User(db.Model):
     username = db.Column(db.String, primary_key=True)
     password = db.Column(db.String)
-    email = db.Column(db.String)
+    email = db.Column(db.String, unique=True)
 
     def __init__(self, username, password, email):
         self.username = username
