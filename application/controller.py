@@ -97,12 +97,12 @@ def do_logout():
 
 
 @app.route(prefix + "/signup", methods=["GET"])
-def show_register():
+def show_signup():
     return render_template('signup.html')
 
 
 @app.route(prefix + "/signup", methods=["POST"])
-def do_register():
+def do_signup():
     username = request.form["username"]
     password = request.form["password"]
     email = request.form["email"]
@@ -124,6 +124,13 @@ def do_register():
     else:
         return "Emails not equals"
 
+
+# Account
+
+@app.route(prefix + "/account", methods=["GET"])
+@login_required
+def show_account():
+    return render_template('account.html')
 
 # Movies
 

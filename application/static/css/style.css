@@ -1,3 +1,8 @@
+body {
+  font-family: Raleway, HelveticaNeue, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 300;
+}
+
 header {
   background-color: rgba(0,0,0,0.75);
   padding-top: 1em;
@@ -10,15 +15,16 @@ header h1 {
   display: inline-block;
   font-size: 3rem;
   font-weight: bold;
-  line-height: 2em;
-  margin-bottom: 0;
-  margin-top: -1.1em;
+  line-height: 1.6em;
+  margin-bottom: 0.4em;
+  margin-top: 0;
   vertical-align: middle;
 }
 
 header img {
   height: auto;
   margin-right: 1em;
+  margin-top: -0.9em;
   width: 3em;
 }
 
@@ -92,7 +98,7 @@ form input[type="submit"] {
   border-radius: 500px;
   color: white;
   font-size: 1.7rem;
-  margin-top: 1em;
+  margin: 1em 0;
   padding: 0;
 }
 
@@ -107,7 +113,7 @@ form input[type="submit"]:hover {
   text-align: center;
 }
 
-#hero h1 {
+#hero h2 {
   font-size: 6rem;
   font-weight: bold;
 }
@@ -168,13 +174,22 @@ section.box p.lead {
   font-size: 1.8rem;
 }
 
-.green {
-  color: #2ebd59;
+section.box p {
+  font-size: 1.6rem;
 }
 
-.img-responsive {
-  height: auto;
-  width: 100%;
+section.box div.row {
+  display: table;
+}
+
+section.box div.box-image, section.box div.box-text {
+  float: none;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.green, .green:hover {
+  color: #2ebd59;
 }
 
 #subscription {
@@ -182,15 +197,25 @@ section.box p.lead {
 }
 
 #subscription h3 {
+  font-size: 3.5rem;
+  font-weight: 300;
   margin-bottom: 1em;
 }
 
 #subscription h4 {
+  font-size: 2.9rem;
+  font-weight: 300;
   margin-top: 3em;
 }
 
-.product p:nth-of-type(2) {
-  min-height: 4em;
+#subscription h5 {
+  font-size: 2.4rem;
+  font-weight: 300;
+  margin-top: 2em;
+}
+
+.product p {
+  min-height: 3em;
 }
 
 footer {
@@ -201,10 +226,12 @@ footer {
 footer li {
   font-weight: bold;
   list-style-type: none;
+  padding: 0.2em 0;
 }
 
 footer p {
   border-top: 1px solid #ddd;
+  margin-bottom: 2.5em;
   margin-top: 2em;
   padding-top: 0.4em;
   text-align: center;
@@ -212,9 +239,90 @@ footer p {
 
 #follow-us h3 {
   font-size: 2rem;
+  margin-top: 0;
 }
 
 #follow-us img {
   height: 3em;
   width: auto;
+}
+
+#follow-us a:not(:last-of-type) {
+  margin-right: 0.5em;
+}
+
+#payment-modal .modal-backdrop {
+  bottom:0;
+  position: fixed;
+}
+
+#payment-modal .modal-body {
+  text-align: center;
+}
+
+#payment-modal .modal-body img {
+  max-width: 13em;
+}
+
+#payment-modal .modal-footer button {
+  background: none;
+  border: none;
+}
+
+@media (min-width: 768px) {
+  section.box .col-md-7 {
+    width: 58.33333333%;
+  }
+
+  section.box .col-md-5 {
+    width: 41.66666667%;
+  }
+
+  #subscription .col-sm-12 {
+    width: 33.33333333%;
+  }
+}
+
+@media (max-width: 767px) {
+  header {
+    text-align: center;
+  }
+
+  header nav ul {
+    padding-left: 0;
+    width: 100%;
+  }
+
+  header nav ul li:last-of-type {
+    padding-right: 1.5em;
+  }
+
+  section.box .col-md-7, section.box .col-md-5 {
+    width: 100%;
+  }
+
+  section.box {
+    text-align: center;
+  }
+
+  section.box div.box-image .img-responsive {
+    display: inline-block;
+    max-width: 90%;
+  }
+
+  section.box .row, section.box div.box-image, section.box div.box-text {
+    display: inline;
+    padding: 0;
+  }
+
+  #follow-us {
+    margin-top: 3em;
+    text-align: center;
+  }
+}
+
+@media (min-width: 1200px) {
+  #products {
+    margin-left: 20px;
+  }
 }

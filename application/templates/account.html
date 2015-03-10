@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block body %}
+{% include "header.html" ignore missing %}
+
+  <div class="parallax-window medium" data-parallax="scroll" data-image-src="{{ url_for('static', filename='images/parallax/gradient.jpg') }}">
+    <div id="hero" class="container">
+    <h2>Hello {{ session.username }}</h2>
+    <p class="lead">This is your account overview panel and you can do almost anything from here. Any problem with your account?</p>
+    <a id="green-button" href="#">Ask for help</a>
+    </div>
+  </div>
+
+  <section id="subscription" class="box">
+    <div class="container">
+      <h3>Upgrade your plan</h3>
+      <p class="lead">Your subscription expires on <span class="green">Sep 3, 2016</span>.<p>
+      <p class="lead"> Don't want to wait to update your subscription? You can do it now below.</p>
+
+      <h4>Purchase extension for</h4>
+      <div id="products" class="row">
+        <div class="col-md-4 col-sm-12 col-xs-12 product">
+          <h5>1 month</h5>
+          <p>24.99€</p>
+          <p>All movies you love for one month more. You in?</p>
+
+          <a id="green-button" class="checkout" href="#">Check out</a>
+        </div>
+
+        <div class="col-md-4 col-sm-12 col-xs-12 product">
+          <h5>3 months</h5>
+          <p>69.97€</p>
+          <p>Not enough? Add 3 months to your subscription</p>
+
+          <a id="green-button" class="checkout" href="#">Check out</a>
+        </div>
+
+        <div class="col-md-4 col-sm-12 col-xs-12  product">
+          <h5>1 year</h5>
+          <p>260.89€</p>
+          <p>This is just for truly movie lovers. Are you?</p>
+
+          <a id="green-button" class="checkout" href="#">Check out</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="parallax-window tiny" data-parallax="scroll" data-image-src="{{ url_for('static', filename='images/parallax/gradient.jpg') }}"></div>
+
+  <div id="payment-modal" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Select a payment method</h4>
+        </div>
+        <div class="modal-body">
+          <p><a href="#"><img src="{{ url_for('static', filename='images/paypal-button.jpg') }}" alt="Paypal checkout logo" /></a></p>
+          <p>- or -</p>
+          <p><a href="#" class="green">Pay through Cajastur with your credit card</a></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% include "footer.html" ignore missing %}
+{% endblock body %}

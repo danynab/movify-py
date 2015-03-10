@@ -1,0 +1,103 @@
+body {
+  background-color: #121314;
+  color: white;
+}
+
+.img-responsive {
+  height: auto;
+  width: 100%;
+}
+
+nav {
+  background-color: #1c1c1f;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  text-align: center;
+  top: 0;
+  max-width: 90px;
+  z-index: 100;
+}
+
+nav img {
+  margin-top: 1em;
+  width: 60% !important;
+}
+
+nav h1 {
+  font-size: 1.3rem;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+}
+
+nav a:hover {
+  color: white;
+}
+
+nav a span.nav-next {
+  display: block;
+}
+
+nav li {
+  list-style-type: none;
+}
+
+nav li a {
+  border-left: 3px solid transparent;
+  color: #88898c;
+  display: block;
+  width: 100%;
+}
+
+nav li a.active {
+  color: white;
+  border-left: 3px solid #84bd00;
+  box-sizing: border-box;
+}
+
+nav li a:before, nav li a:after {
+  font-size: 25px !important;
+  margin-left: 0 !important;
+}
+
+nav li a span.nav-next {
+  font-size: 1.33rem;
+}
+
+#content {
+  margin-left: 90px;
+  padding: 1.5em;
+}
+
+#content h2 {
+  font-size: 4.8rem;
+}
+
+#content section h3 {
+  border-bottom: 1px solid #222;
+  font-size: 1.9rem;
+  letter-spacing: 0.02em;
+}
+
+#content section:not(:first-of-type) h3 {
+  color: #88898c;
+}
+
+#discover, #recomendations {
+  margin-bottom: 3em;
+}
+
+#discover div.movie {
+  background-color: #88898c;
+  min-height: 200px;
+}
+
+#recomendations div.movie {
+  background-color: #88898c;
+  min-height: 150px;
+}
