@@ -18,8 +18,8 @@ def print_ip(response):
 
 
 @app.route(prefix + "/", methods=["GET"])
-def home():
-    return redirect("https://github.com/danynab/movify-py")
+def index():
+    return render_template("index.html")
 
 
 @app.route(prefix + "/init")
@@ -49,26 +49,28 @@ def do_login():
         return 'Username or password is not correct'
 
 
-@app.route(prefix + "/register", methods=["GET"])
+@app.route(prefix + "/signup", methods=["GET"])
 def show_register():
-    return render_template('register.html')
+    return render_template('signup.html')
 
 
-@app.route(prefix + "/register", methods=["POST"])
+@app.route(prefix + "/signup", methods=["POST"])
 def do_register():
     username = request.form["username"]
     password = request.form["password"]
-    password_check = request.form["password_check"]
     email = request.form["email"]
-    first_name = request.form["first_name"]
-    last_name = request.form["last_name"]
+    confirm_email = request.form["confirm_email"]
+    if username.__len__() == 0:
+        return "Username can not be empty"
     if password.__len__() == 0:
         return "Password can not be empty"
-    if password_check == password:
-        user = user_service.register(username, password, email, first_name, last_name)
+    if email.__len__() == 0:
+        return "Email can not be empty"
+    if email == confirm_email:
+        user = user_service.register(username, password, email)
         return "Success. User registered" if user is not None else "Username already registered"
     else:
-        return "Passwords not equals"
+        return "Emails not equals"
 
 
 # Movies
@@ -89,7 +91,8 @@ def save_movie():
     cast = request.form["cast"]
     genre = request.form["genre"]
     url = request.form["url"]
-    movie = movie_service.save(title, synopsis, year, time, director, cast, genre, url)
+    cover = request.form["cover"]
+    movie = movie_service.save(title, synopsis, year, time, director, cast, genre, url, cover)
     return redirect(url_for("show_movies"))
 
 

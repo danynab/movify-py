@@ -13,12 +13,12 @@ def get_all():
     return user_persistence.get_all()
 
 
-def register(username, password, email, first_name, last_name):
+def register(username, password, email):
     user = get(username)
     if user is not None:
         return None
     password_hash = hashlib.md5(password.encode("utf")).hexdigest()
-    user = User(username, password_hash, email, first_name, last_name)
+    user = User(username, password_hash, email)
     user_persistence.save(user)
     return user
 

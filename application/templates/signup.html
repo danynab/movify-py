@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Log in - Movify</title>
+  <title>Sign up - Movify</title>
   <meta name="description" content="">
   <meta name="author" content="">
 
@@ -23,14 +23,16 @@
   </header>
 
   <div id="form-container" class="container">
-    <form method="post" action="{{ url_for('do_login') }}">
-      <input class="u-full-width" type="text" name="username" placeholder="username" autocomplete="off" required="true">
-      <input class="u-full-width" type="password" name="password" placeholder="password" required="true">
+    <h2>Sign up with your email address</h2>
+    <form method="post" action="{{ url_for('do_register') }}">
+      <input class="u-full-width" type="text" name="username" placeholder="Username" autocomplete="off" required="true">
+      <input class="u-full-width" type="text" name="email" placeholder="Email" autocomplete="off" required="true">
+      <input class="u-full-width" type="text" name="confirm_email" placeholder="Confirm email" autocomplete="off" required="true">
+      <input class="u-full-width" type="password" name="password" placeholder="Password" required="true">
 
-      <input class="u-full-width green-button" type="submit" value="Log in">
+      <p class="disclaimer">By clicking on Sign up, you agree to <a href="#">Movify's terms & conditions</a> and <a href="#">privacy policy</a></p>
+      <input class="u-full-width green-button" type="submit" value="Sign up">
     </form>
-    <a href="#">Forgot your password?</a>
-    <p>Don't have an account? <a href="{{ url_for('show_register') }}">Sign up</a></p>
   </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>

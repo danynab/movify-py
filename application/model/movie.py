@@ -13,8 +13,9 @@ class Movie(db.Model):
     cast = db.Column(db.String)
     genre = db.Column(db.String)
     url = db.Column(db.String)
+    cover = db.Column(db.String)
 
-    def __init__(self, title, synopsis, year, time, director, cast, genre, url):
+    def __init__(self, title, synopsis, year, time, director, cast, genre, url, cover):
         self.title = title
         self.synopsis = synopsis
         self.year = year
@@ -23,3 +24,4 @@ class Movie(db.Model):
         self.cast = cast
         self.genre = genre
         self.url = url
+        self.cover = cover
