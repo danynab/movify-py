@@ -9,9 +9,9 @@
         <p class="lead">Reconquer your couch. Movify let you connect again with your favourite passion. Yeah, thats it.
             Movies.</p>
         {% if not session.username %}
-        <a id="green-button" href="{{ url_for('show_signup') }}">Subscribe now</a>
+        <a class="green-button" href="{{ url_for('show_signup') }}">Subscribe now</a>
         {% else %}
-        <a id="green-button" href="{{ url_for('show_account') }}">Subscribe now</a>
+        <a class="green-button" href="{{ url_for('show_account') }}">Subscribe now</a>
         {% endif %}
         <p><a href="#">Go to Web Player</a></p>
     </div>

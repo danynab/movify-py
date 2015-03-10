@@ -1,7 +1,7 @@
 from functools import wraps
 from application import app, prefix
 from flask import redirect, request, render_template, url_for, session, g
-from application.services import user_service, movie_service, rate_service
+from application.services import user_service, movie_service, rate_service, subscription_service
 import hashlib
 
 __author__ = 'Dani Meana'
@@ -21,6 +21,7 @@ def login_required(f):
                 if user is not None:
                     return f(*args, **kwargs)
         return redirect(url_for('show_login'))
+
     return decorated_function
 
 
@@ -60,11 +61,20 @@ def index():
 
 @app.route(prefix + "/init")
 def init():
+    import application.data as data
     from application import db
 
     db.drop_all()
     db.create_all()
-    return "Tables created"
+
+    for subscription in data.subscriptions:
+        subscription_service.save(
+            name=subscription["name"],
+            description=subscription["description"],
+            months=subscription["months"],
+            price=subscription["price"])
+
+    return redirect(url_for("index"))
 
 
 # Users
@@ -130,7 +140,9 @@ def do_signup():
 @app.route(prefix + "/account", methods=["GET"])
 @login_required
 def show_account():
-    return render_template('account.html')
+    subscriptions = subscription_service.get_order_by_months()
+    return render_template('account.html', subscriptions=subscriptions)
+
 
 # Movies
 
