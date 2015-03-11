@@ -263,6 +263,7 @@ def _get_cajastur_payment_data(subscription, return_url, cancel_url):
     operation = _generate_product_name(subscription.months)
     price = subscription.price
     description = 'Movify ' + subscription.name + ' subscription'
+    session[MONTHS_KEY] = subscription.months
     return cajastur_payment(operation, price, description, return_url, cancel_url)
 
 
@@ -280,6 +281,16 @@ def proccess_paypal_payment():
         return redirect(url_for('show_account'))
     else:
         return 'FAIL'
+
+
+@app.route(prefix + '/account/subscription/cajastur')
+@login_required
+def proccess_cajastur_payment():
+    months = session[MONTHS_KEY]
+    session.pop(MONTHS_KEY)
+    username = session[USERNAME_KEY]
+    user_service.increase_expiration(username, months)
+    return redirect(url_for('show_account'))
 
 
 # Movies
