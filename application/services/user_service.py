@@ -1,6 +1,10 @@
+from datetime import datetime
+from time import mktime
+
 import hashlib
 from application.model.user import User
 from application.persistence import user_persistence
+
 
 __author__ = 'Dani Meana'
 
@@ -18,7 +22,10 @@ def signup(username, password, email):
     if user is not None:
         return None
     password_hash = hashlib.md5(password.encode('utf')).hexdigest()
-    user = User(username, password_hash, email)
+    today = datetime.now().date()
+    today_millis = int(mktime(today.timetuple()) * 1000)
+    print(today_millis)
+    user = User(username, password_hash, email, today_millis)
     user_persistence.save(user)
     return user
 

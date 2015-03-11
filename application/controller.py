@@ -1,4 +1,5 @@
 from datetime import datetime
+from time import time
 
 from application.payments.cajastur import cajastur_payment
 from application.payments.paypal import paypal_payment
@@ -202,7 +203,17 @@ def do_signup():
 @login_required
 def show_account():
     subscriptions = subscription_service.get_order_by_months()
-    return render_template('account.html', subscriptions=subscriptions)
+    username = session[USERNAME_KEY]
+    user = user_service.get(username)
+    expiration = user.expiration
+    expiration_date = datetime.fromtimestamp(expiration / 1000)
+    expiration_date_str = expiration_date.strftime("%b %d, %Y")
+    return render_template('account.html',
+                           subscriptions=subscriptions,
+                           user={"username": user.username,
+                                 "expiration": user.expiration,
+                                 "expiration_str": expiration_date_str},
+                           today_millis=int(time() * 1000))
 
 
 @app.route(prefix + '/_generate_cajastur_payment_data')
