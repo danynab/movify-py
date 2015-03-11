@@ -8,7 +8,7 @@ class Movie(db.Model):
     title = db.Column(db.String)
     year = db.Column(db.Integer)
     duration = db.Column(db.Integer)
-    # categories
+    categories = db.Column(db.String)
     description = db.Column(db.String)
     storyline = db.Column(db.String)
     director = db.Column(db.String)
@@ -17,10 +17,12 @@ class Movie(db.Model):
     cover = db.Column(db.String)
     background = db.Column(db.String)
 
-    def __init__(self, title, year, duration, description, storyline, director, writers, stars, cover, background):
+    def __init__(self, title, year, duration, categories, description, storyline, director, writers, stars, cover,
+                 background):
         self.title = title
         self.year = year
         self.duration = duration
+        self.categories = categories
         self.description = description
         self.storyline = storyline
         self.director = director
@@ -28,16 +30,3 @@ class Movie(db.Model):
         self.stars = stars
         self.cover = cover
         self.background = background
-
-    def to_dict(self):
-        _dict = {'title': self.title,
-                 'year': self.year,
-                 'duration': self.duration,
-                 'description': self.description,
-                 'storyline': self.storyline,
-                 'director': self.director,
-                 'writers': self.writers,
-                 'stars': self.stars,
-                 'cover': self.cover,
-                 'background': self.background}
-        return {k: v for k, v in _dict.items() if v}

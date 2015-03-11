@@ -93,6 +93,7 @@ def init():
             title=movie["title"],
             year=movie["year"],
             duration=movie["duration"],
+            categories=','.join(movie["categories"]),
             description=movie["description"],
             storyline=movie["storyline"],
             director=movie["director"],
@@ -243,14 +244,14 @@ def find_movies():
         movies = movie_service.get_all()
     else:
         movies = movie_service.find_by_title(title)
-    return dumps([movie.to_dict() for movie in movies])
+    return dumps(movie_service.movies_to_dicts(movies))
 
 
 @app.route(prefix + "/movies/<int:movie_id>", methods=["GET"])
 @login_required
 def get_movie(movie_id):
     movie = movie_service.get(movie_id)
-    return dumps(movie.to_dict())
+    return dumps(movie_service.movie_to_dict(movie))
 
 
 @app.route(prefix + "/movies/<int:movie_id>/rates", methods=["POST"])

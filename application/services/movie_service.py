@@ -16,7 +16,28 @@ def find_by_title(title):
     return movie_persistence.find_by_title(title)
 
 
-def save(title, year, duration, description, storyline, director, writers, stars, cover, background):
-    movie = Movie(title, year, duration, description, storyline, director, writers, stars, cover, background)
+def save(title, year, duration, categories, description, storyline, director, writers, stars, cover, background):
+    movie = Movie(title, year, duration, categories, description, storyline, director, writers, stars, cover,
+                  background)
     movie_persistence.save(movie)
     return movie
+
+
+def movie_to_dict(movie):
+    categories = movie.categories.split(',')
+    _dict = {'title': movie.title,
+             'year': movie.year,
+             'duration': movie.duration,
+             'categories': categories,
+             'description': movie.description,
+             'storyline': movie.storyline,
+             'director': movie.director,
+             'writers': movie.writers,
+             'stars': movie.stars,
+             'cover': movie.cover,
+             'background': movie.background}
+    return {k: v for k, v in _dict.items() if v}
+
+
+def movies_to_dicts(movies):
+    return [movie_to_dict(movie) for movie in movies]
