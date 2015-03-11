@@ -237,7 +237,7 @@ def proccess_paypal_payment():
 # Movies
 
 @app.route(prefix + "/movies", methods=["GET"])
-@login_required
+#@login_required
 def find_movies():
     title = request.args.get("title")
     if title is None:
@@ -248,7 +248,7 @@ def find_movies():
 
 
 @app.route(prefix + "/movies/<int:movie_id>", methods=["GET"])
-@login_required
+#@login_required
 def get_movie(movie_id):
     movie = movie_service.get(movie_id)
     return dumps(movie_service.movie_to_dict(movie))
