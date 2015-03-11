@@ -122,7 +122,7 @@ form input[type="submit"]:hover {
   font-size: 2rem;
 }
 
-#green-button {
+.green-button {
   background-color: #2ebd59;
   border-radius: 500px;
   color: white;
@@ -137,7 +137,9 @@ form input[type="submit"]:hover {
   text-transform: uppercase;
 }
 
-#green-button:hover {
+.green-button:hover {
+    text-decoration: none;
+    color: white;
   background-color: #1ed760;
 }
 
