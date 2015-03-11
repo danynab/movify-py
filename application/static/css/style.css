@@ -122,7 +122,7 @@ form input[type="submit"]:hover {
   font-size: 2rem;
 }
 
-a.green-button {
+#green-button {
   background-color: #2ebd59;
   border-radius: 500px;
   color: white;
@@ -137,7 +137,7 @@ a.green-button {
   text-transform: uppercase;
 }
 
-a.green-button:hover {
+#green-button:hover {
   background-color: #1ed760;
 }
 
@@ -267,6 +267,15 @@ footer p {
 #payment-modal .modal-footer button {
   background: none;
   border: none;
+}
+
+.modal-open {
+  overflow: visible;
+  padding-right: 0 !important;
+}
+
+.modal-open .parallax-mirror {
+  z-index: 0 !important;
 }
 
 @media (min-width: 768px) {
