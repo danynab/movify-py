@@ -9,9 +9,10 @@ Instalar las herramientas de Python3:
 * Ubuntu:
 ```bash
 sudo apt-get update
-sudo apt-get -y install python3 python3-pip
+sudo apt-get -y install python3 python3-pip libffi-dev
 sudo pip3 install virtualenv
 ```
+Nota: Es necesario instalar libffi-dev (usado en el sdk de PayPal)
 
 * Mac OS X (requiere [brew](http://brew.sh)):
 ```bash
