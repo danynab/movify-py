@@ -14,7 +14,8 @@ def rate_movie(movie, user, rate, comment):
 
 
 def review_to_dict(review):
-    _dict = {'rate': review.rate,
+    _dict = {'username': review.username,
+             'rate': review.rate,
              'comment': review.comment}
     return {k: v for k, v in _dict.items() if v is not None}
 
