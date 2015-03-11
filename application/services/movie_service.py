@@ -16,6 +16,10 @@ def find_by_title(title):
     return movie_persistence.find_by_title(title)
 
 
+def find_by_category(category):
+    return movie_persistence.find_by_category(category)
+
+
 def save(title, year, duration, categories, description, storyline, director, writers, stars, cover, background):
     movie = Movie(title, year, duration, categories, description, storyline, director, writers, stars, cover,
                   background)

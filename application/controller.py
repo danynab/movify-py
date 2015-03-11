@@ -254,6 +254,13 @@ def get_movie(movie_id):
     return dumps(movie_service.movie_to_dict(movie))
 
 
+@app.route(prefix + "/categories/<category>/movies", methods=["GET"])
+# @login_required
+def find_movies_by_category(category):
+    movies = movie_service.find_by_category(category)
+    return dumps(movie_service.movies_to_dicts(movies))
+
+
 @app.route(prefix + "/movies/<int:movie_id>/rates", methods=["POST"])
 @login_required
 def rate_movie(movie_id):
