@@ -12,6 +12,10 @@ def get_all():
     return Movie.query.all()
 
 
+def find_by_title(title):
+    return Movie.query.filter(Movie.title.ilike("%" + title + "%")).all()
+
+
 def save(movie):
     db.session.add(movie)
     db.session.commit()

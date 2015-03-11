@@ -1,12 +1,14 @@
+from datetime import datetime
+
 from application.payments.cajastur import cajastur_payment
 from application.payments.paypal import paypal_payment
 from flask.json import dumps
-from datetime import datetime
 from functools import wraps
 from application import app, prefix
-from flask import redirect, request, render_template, url_for, session, g, Response
+from flask import redirect, request, render_template, url_for, session, g
 from application.services import user_service, movie_service, rate_service, subscription_service
 import hashlib
+
 
 __author__ = 'Dani Meana'
 
@@ -235,9 +237,20 @@ def proccess_paypal_payment():
 
 @app.route(prefix + "/movies", methods=["GET"])
 @login_required
-def show_movies():
-    movies = movie_service.get_all()
+def find_movies():
+    title = request.args.get("title")
+    if title is None:
+        movies = movie_service.get_all()
+    else:
+        movies = movie_service.find_by_title(title)
     return dumps([movie.to_dict() for movie in movies])
+
+
+@app.route(prefix + "/movies/<int:movie_id>", methods=["GET"])
+@login_required
+def get_movie(movie_id):
+    movie = movie_service.get(movie_id)
+    return dumps(movie.to_dict())
 
 
 @app.route(prefix + "/movies/<int:movie_id>/rates", methods=["POST"])
