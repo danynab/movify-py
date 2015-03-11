@@ -13,10 +13,11 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logo-black.png') }}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 </head>
 <body>
     {% block body %}{% endblock body%}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/parallax.js') }}"></script>
     <script src="{{ url_for('static', filename='js/movify.js') }}"></script>

@@ -1,3 +1,5 @@
+from application.payments.paypal import paypal_payment
+from flask.json import dumps
 from functools import wraps
 from application import app, prefix
 from flask import redirect, request, render_template, url_for, session, g
@@ -143,6 +145,27 @@ def show_account():
     subscriptions = subscription_service.get_order_by_months()
     return render_template('account.html', subscriptions=subscriptions)
 
+@app.route(prefix + "/_generate_payment_data")
+def generate_payment_data():
+    months = request.args.get("months", 0, type=int)
+    subscription = subscription_service.get_by_months(months)
+    if subscription is None:
+        return redirect(url_for("index"))
+    else:
+        paypal_data = _get_paypal_payment_data(subscription)
+        return dumps({"paypal": paypal_data})
+
+
+def _get_paypal_payment_data(subscription):
+    price = subscription.price
+    quantity = "1"
+    name = "Movify " + subscription.name + " subscription"
+    description = subscription.description
+    sku = "Mfysubscription" + str(subscription.months) + "m"
+    return_url = "http://www.google.com"
+    cancel_url = "http://www.apple.com/"
+    url_payment = paypal_payment(price, quantity, name, description, sku, return_url, cancel_url)
+    return {"url": url_payment}
 
 # Movies
 
