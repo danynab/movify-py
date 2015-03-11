@@ -30,9 +30,8 @@
         }, function (paypal) {
             $("#paypal-link").attr("href", paypal.url);
             if (paypalLinkClicked) {
-                $("#payment-modal-loading").hide();
-                $("#payment-modal-content").show();
                 $(location).attr("href", paypal.url);
+                $("#payment-modal").modal("hide");
             }
         });
     }
