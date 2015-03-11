@@ -1,9 +1,10 @@
 from application.payments.cajastur import cajastur_payment
 from application.payments.paypal import paypal_payment
 from flask.json import dumps
+from datetime import datetime
 from functools import wraps
 from application import app, prefix
-from flask import redirect, request, render_template, url_for, session, g
+from flask import redirect, request, render_template, url_for, session, g, Response
 from application.services import user_service, movie_service, rate_service, subscription_service
 import hashlib
 
@@ -11,6 +12,7 @@ __author__ = 'Dani Meana'
 
 SESSION_ID_KEY = "session_id"
 USERNAME_KEY = "username"
+PAYPAL_ID_KEY = "paypal_id"
 
 
 def login_required(f):
@@ -37,6 +39,12 @@ def _calculate_session_id():
 
 def _to_md5(string):
     return hashlib.md5(string.encode("utf")).hexdigest()
+
+
+def _generate_product_name(months):
+    date_now = datetime.now()
+    date_now_str = str(date_now.year) + str(date_now.month) + str(date_now.day) + str(date_now.hour) + str(date_now.minute) + str(date_now.second)
+    return "Movify" + str(months) + "m" + date_now_str
 
 
 @app.before_request
@@ -155,8 +163,8 @@ def generate_cajastur_payment_data():
     if subscription is None:
         return redirect(url_for("index"))
     else:
-        return_url = "http://www.google.com"
-        cancel_url = "http://www.apple.com"
+        return_url = "http://156.35.95.67/movify/account/subscription/cajastur"
+        cancel_url = "http://156.35.95.67/movify/account"
         cajastur_data = _get_cajastur_payment_data(subscription, return_url, cancel_url)
         return dumps(cajastur_data)
 
@@ -169,8 +177,8 @@ def generate_paypal_payment_data():
     if subscription is None:
         return redirect(url_for("index"))
     else:
-        return_url = "http://www.google.com"
-        cancel_url = "http://www.apple.com"
+        return_url = "http://156.35.95.67/movify/account/subscription/paypal"
+        cancel_url = "http://156.35.95.67/movify/account"
         paypal_data = _get_paypal_payment_data(subscription, return_url, cancel_url)
         return dumps(paypal_data)
 
@@ -180,15 +188,30 @@ def _get_paypal_payment_data(subscription, return_url, cancel_url):
     quantity = "1"
     name = "Movify " + subscription.name + " subscription"
     description = subscription.description
-    sku = "Mfysubscription" + str(subscription.months) + "m"
-    url_payment = paypal_payment(price, quantity, name, description, sku, return_url, cancel_url)
-    return {"url": url_payment}
+    sku = _generate_product_name(subscription.months)
+    payment_data = paypal_payment(price, quantity, name, description, sku, return_url, cancel_url)
+    url = payment_data["url"]
+    paypal_id = payment_data["id"]
+    session[PAYPAL_ID_KEY] = _to_md5(paypal_id)
+    return {"url": payment_data["url"]}
 
 
 def _get_cajastur_payment_data(subscription, return_url, cancel_url):
-    operation = "Movify " + subscription.name + " subscription"
+    operation = _generate_product_name(subscription.months)
     price = subscription.price
-    return cajastur_payment(operation, price, return_url, cancel_url)
+    description = subscription.name
+    return cajastur_payment(operation, price, description, return_url, cancel_url)
+
+
+@app.route(prefix + "/account/subscription/paypal")
+@login_required
+def proccess_paypal_payment():
+    paypal_id = request.args.get("paymentId")
+    paypal_id_hash = session[PAYPAL_ID_KEY]
+    if paypal_id_hash == _to_md5(paypal_id):
+        return "OK"
+    else:
+        return "FAIL"
 
 
 # Movies

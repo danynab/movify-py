@@ -20,6 +20,7 @@
             $("#URL_OK").val(cajastur.url_ok);
             $("#URL_NOK").val(cajastur.url_error);
             $("#Firma").val(cajastur.signature);
+            $("#Descripcion").val(cajastur.description);
         });
     }
 
@@ -135,7 +136,7 @@
                         <input type="hidden" name="Firma" id="Firma"/>
                         <input type="hidden" name="Idioma" value="1"/>
                         <input type="hidden" name="Pago_soportado" value="SSL"/>
-                        <input type="hidden" name="Descripcion" value=""/>
+                        <input type="hidden" name="Descripcion" id="Descripcion"/>
                         <input type="hidden" name="Cifrado" value="SHA1"/>
                         <a href="javascript:{}" onclick="$('#form-cajastur').submit(); return false;" class="green">
                             Pay through Cajastur with your credit card

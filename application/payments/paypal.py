@@ -46,4 +46,7 @@ def paypal_payment(price, quantity, name, description, sku, return_url, cancel_u
 
     payment.create()
     approval_url = [link["href"] for link in payment["links"] if link["rel"] == "approval_url"][0]
-    return approval_url
+    return {
+                "id": payment.id,
+                "url": approval_url
+            }

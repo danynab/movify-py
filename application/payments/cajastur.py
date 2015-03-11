@@ -12,15 +12,16 @@ commerce_data = {
 }
 
 
-def cajastur_payment(operation, price, url_ok, url_error):
-    price = str(int(price*100))
+def cajastur_payment(operation, price, description, url_ok, url_error):
+    price = int(price*100)
     return {
         "operation": operation,
         "price": price,
+        "description": description,
         "commerce_data": commerce_data,
         "url_ok": url_ok,
         "url_error": url_error,
-        "signature": compute_signature(operation, price, url_ok, url_error)
+        "signature": compute_signature(operation, str(price), url_ok, url_error)
     }
 
 
@@ -37,7 +38,7 @@ def compute_signature(operation, price, url_ok, url_error):
               "SHA1" + \
               url_ok + \
               url_error
-    my_sha = hashlib.sha1()
-    my_sha.update(str.encode(message))
-    digest = my_sha.digest()
+    sha = hashlib.sha1()
+    sha.update(str.encode(message))
+    digest = sha.digest()
     return ''.join('{:02x}'.format(x) for x in digest)
