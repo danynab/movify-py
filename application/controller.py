@@ -1,3 +1,4 @@
+from application.payments.cajastur import cajastur_payment
 from application.payments.paypal import paypal_payment
 from flask.json import dumps
 from functools import wraps
@@ -145,6 +146,7 @@ def show_account():
     subscriptions = subscription_service.get_order_by_months()
     return render_template('account.html', subscriptions=subscriptions)
 
+
 @app.route(prefix + "/_generate_payment_data")
 def generate_payment_data():
     months = request.args.get("months", 0, type=int)
@@ -152,20 +154,31 @@ def generate_payment_data():
     if subscription is None:
         return redirect(url_for("index"))
     else:
-        paypal_data = _get_paypal_payment_data(subscription)
-        return dumps({"paypal": paypal_data})
+        return_url = "http://www.google.com"
+        cancel_url = "http://www.apple.com"
+        paypal_data = _get_paypal_payment_data(subscription, return_url, cancel_url)
+        cajastur_data = _get_cajastur_payment_data(subscription, return_url, cancel_url)
+        return dumps({
+            "paypal": paypal_data,
+            "cajastur": cajastur_data
+        })
 
 
-def _get_paypal_payment_data(subscription):
+def _get_paypal_payment_data(subscription, return_url, cancel_url):
     price = subscription.price
     quantity = "1"
     name = "Movify " + subscription.name + " subscription"
     description = subscription.description
     sku = "Mfysubscription" + str(subscription.months) + "m"
-    return_url = "http://www.google.com"
-    cancel_url = "http://www.apple.com/"
     url_payment = paypal_payment(price, quantity, name, description, sku, return_url, cancel_url)
     return {"url": url_payment}
+
+
+def _get_cajastur_payment_data(subscription, return_url, cancel_url):
+    operation = "Movify " + subscription.name + " subscription"
+    price = subscription.price
+    return cajastur_payment(operation, price, return_url, cancel_url)
+
 
 # Movies
 

@@ -46,29 +46,4 @@ def paypal_payment(price, quantity, name, description, sku, return_url, cancel_u
 
     payment.create()
     approval_url = [link["href"] for link in payment["links"] if link["rel"] == "approval_url"][0]
-    # print(payment)
-    # print(payment['id'])
     return approval_url
-
-    # payment = paypalrestsdk.Payment.find("PAY-91026765784018620KT7O4SI")
-    # payment.execute({"payer_id": "3ESVXSE43SHLG"})
-    # print(payment)
-
-
-if __name__ == "__main__":
-
-    # Example payer (PayPal)
-    # Email: movify@movify.com
-    # Pass: 12345678
-
-
-    # Example data
-    my_price = "11.99"
-    my_quantity = "1"
-    my_name = "Movify One-Month Subscription"
-    my_description = "This is the payment description."
-    my_sku = "1monthsubs00000"  # kind of id product (stock-keeping unit)
-    my_return_url = "http://www.google.com"
-    my_cancel_url = "http://www.apple.com/"
-    url_payment = paypal_payment(my_price, my_quantity, my_name, my_description, my_sku, my_return_url, my_cancel_url)
-    print("URL PayPal Payment", url_payment)

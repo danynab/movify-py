@@ -4,7 +4,7 @@
 {% include "header.html" ignore missing %}
 
 <script type=text/javascript>
-    $(function() {
+    $(function () {
         $("a.checkout").bind("click", function () {
             $("#payment-modal-loading").show();
             $("#payment-modal-content").hide();
@@ -12,8 +12,20 @@
             var months = id.split("-")[1]
             $.getJSON("/movify/_generate_payment_data", {
                 months: months
-            }, function(data) {
-                $("#paypal-link").attr("href", data.paypal.url);
+            }, function (data) {
+                var paypal = data.paypal;
+                var cajastur = data.cajastur;
+                $("#paypal-link").attr("href", paypal.url);
+                $("#MerchantID").val(cajastur.commerce_data.MERCHANT_ID);
+                $("#AcquirerBIN").val(cajastur.commerce_data.ACQUIRER_BIN);
+                $("#TerminalID").val(cajastur.commerce_data.TERMINAL_ID);
+                $("#Num_operacion").val(cajastur.operation);
+                $("#Importe").val(cajastur.price);
+                $("#TipoMoneda").val(cajastur.commerce_data.TIPO_MONEDA);
+                $("#Exponente").val(cajastur.commerce_data.EXPONENTE);
+                $("#URL_OK").val(cajastur.url_ok);
+                $("#URL_NOK").val(cajastur.url_error);
+                $("#Firma").val(cajastur.signature);
                 $("#payment-modal-loading").hide();
                 $("#payment-modal-content").show();
             });
@@ -74,15 +86,35 @@
             </div>
             <div class="modal-body">
                 <div id="payment-modal-loading">
-                    <img src="{{ url_for('static', filename='images/loading.gif') }}" id="loading-indicator" style="display: block; margin: auto;"/>
+                    <img src="{{ url_for('static', filename='images/loading.gif') }}" id="loading-indicator"
+                         style="display: block; margin: auto;"/>
                 </div>
                 <div id="payment-modal-content">
-                    <p><a id="paypal-link" href="#"><img src="{{ url_for('static', filename='images/paypal-button.jpg') }}"
-                                        alt="Paypal checkout logo"/></a></p>
+                    <p><a id="paypal-link" href="#"><img
+                            src="{{ url_for('static', filename='images/paypal-button.jpg') }}"
+                            alt="Paypal checkout logo"/></a></p>
 
                     <p>- or -</p>
 
-                    <p><a href="#" class="green">Pay through Cajastur with your credit card</a></p>
+                    <form id="form-cajastur" action="http://tpv.ceca.es:8000/cgi-bin/tpv" method=post>
+                        <input type="hidden" name="MerchantID" id="MerchantID"/>
+                        <input type="hidden" name="AcquirerBIN" id="AcquirerBIN"/>
+                        <input type="hidden" name="TerminalID" id="TerminalID"/>
+                        <input type="hidden" name="Num_operacion" id="Num_operacion"/>
+                        <input type="hidden" name="Importe" id="Importe"/>
+                        <input type="hidden" name="TipoMoneda" id="TipoMoneda"/>
+                        <input type="hidden" name="Exponente" id="Exponente"/>
+                        <input type="hidden" name="URL_OK" id="URL_OK"/>
+                        <input type="hidden" name="URL_NOK" id="URL_NOK"/>
+                        <input type="hidden" name="Firma" id="Firma"/>
+                        <input type="hidden" name="Idioma" value="1"/>
+                        <input type="hidden" name="Pago_soportado" value="SSL"/>
+                        <input type="hidden" name="Descripcion" value=""/>
+                        <input type="hidden" name="Cifrado" value="SHA1"/>
+                        <a href="javascript:{}" onclick="$('#form-cajastur').submit(); return false;" class="green">
+                            Pay through Cajastur with your credit card
+                        </a>
+                    </form>
                 </div>
             </div>
             <div class="modal-footer">
