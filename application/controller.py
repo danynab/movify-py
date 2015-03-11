@@ -12,9 +12,9 @@ import hashlib
 
 __author__ = 'Dani Meana'
 
-SESSION_ID_KEY = "session_id"
-USERNAME_KEY = "username"
-PAYPAL_ID_KEY = "paypal_id"
+SESSION_ID_KEY = 'session_id'
+USERNAME_KEY = 'username'
+PAYPAL_ID_KEY = 'paypal_id'
 
 
 def login_required(f):
@@ -33,21 +33,21 @@ def login_required(f):
 
 
 def _calculate_session_id():
-    ip = g.get("ip", "")
-    user_agent = g.get("user_agent", "")
+    ip = g.get('ip', '')
+    user_agent = g.get('user_agent', '')
     session_id_str = ip + user_agent
     return _to_md5(_to_md5(session_id_str))
 
 
 def _to_md5(string):
-    return hashlib.md5(string.encode("utf")).hexdigest()
+    return hashlib.md5(string.encode('utf')).hexdigest()
 
 
 def _generate_product_name(months):
     date_now = datetime.now()
     date_now_str = str(date_now.year) + str(date_now.month) + str(date_now.day) + str(date_now.hour) + str(
         date_now.minute) + str(date_now.second)
-    return "Movify" + str(months) + "m" + date_now_str
+    return 'Movify' + str(months) + 'm' + date_now_str
 
 
 @app.before_request
@@ -68,12 +68,12 @@ def print_ip():
     g.user_agent = user_agent
 
 
-@app.route(prefix + "/", methods=["GET"])
+@app.route(prefix + '/', methods=['GET'])
 def index():
-    return render_template("index.html")
+    return render_template('index.html')
 
 
-@app.route(prefix + "/init")
+@app.route(prefix + '/init')
 def init():
     import application.data as data
     from application import db
@@ -83,71 +83,71 @@ def init():
 
     for subscription in data.subscriptions:
         subscription_service.save(
-            name=subscription["name"],
-            description=subscription["description"],
-            months=subscription["months"],
-            price=subscription["price"])
+            name=subscription['name'],
+            description=subscription['description'],
+            months=subscription['months'],
+            price=subscription['price'])
 
     for movie in data.movies:
         movie_service.save(
-            title=movie["title"],
-            year=movie["year"],
-            duration=movie["duration"],
-            categories=','.join(movie["categories"]),
-            description=movie["description"],
-            storyline=movie["storyline"],
-            director=movie["director"],
-            writers=movie["writers"],
-            stars=movie["stars"],
-            cover="http://156.35.95.67/movify/static/covers/" + movie["cover"],
-            background="http://156.35.95.67/movify/static/background/" + movie["background"]
+            title=movie['title'],
+            year=movie['year'],
+            duration=movie['duration'],
+            categories=','.join(movie['categories']),
+            description=movie['description'],
+            storyline=movie['storyline'],
+            director=movie['director'],
+            writers=movie['writers'],
+            stars=movie['stars'],
+            cover='http://156.35.95.67/movify/static/covers/' + movie['cover'],
+            background='http://156.35.95.67/movify/static/background/' + movie['background']
         )
 
-    user_service.signup("dani", "dani", "dani@danynab.es")
+    user_service.signup('dani', 'dani', 'dani@danynab.es')
 
-    return redirect(url_for("index"))
+    return redirect(url_for('index'))
 
 
 # Users
 
-@app.route(prefix + "/login", methods=["GET"])
+@app.route(prefix + '/login', methods=['GET'])
 def show_login():
     return render_template('login.html')
 
 
-@app.route(prefix + "/login", methods=["POST"])
+@app.route(prefix + '/login', methods=['POST'])
 def do_login():
-    username = request.form["username"]
-    password = request.form["password"]
+    username = request.form['username']
+    password = request.form['password']
     user = user_service.login(username, password)
     if user is not None:
         session_id = _calculate_session_id()
         session[SESSION_ID_KEY] = session_id
         session[USERNAME_KEY] = username
-        return redirect(url_for("index"))
+        return redirect(url_for('index'))
     else:
-        return redirect(url_for("show_login"))
+        return redirect(url_for('show_login'))
 
 
-@app.route(prefix + "/logout", methods=["GET"])
+@app.route(prefix + '/logout', methods=['GET'])
 @login_required
 def do_logout():
     session.pop(SESSION_ID_KEY)
     session.pop(USERNAME_KEY)
-    return redirect(url_for("index"))
+    return redirect(url_for('index'))
 
 
-@app.route(prefix + "/signup", methods=["GET"])
+@app.route(prefix + '/signup', methods=['GET'])
 def show_signup():
     return render_template('signup.html')
 
 
-@app.route(prefix + "/signup", methods=["POST"])
+@app.route(prefix + '/signup', methods=['POST'])
 def do_signup():
-    username = request.form["username"]
-    password = request.form["password"]
-    email = request.form["email"]
-    confirm_email = request.form["confirm_email"]
+    username = request.form['username']
+    password = request.form['password']
+    email = request.form['email']
+    confirm_email = request.form['confirm_email']
     if username.__len__() == 0:
         return "Username can not be empty"
     if password.__len__() == 0:
@@ -160,7 +160,7 @@ def do_signup():
             session_id = _calculate_session_id()
             session[SESSION_ID_KEY] = session_id
             session[USERNAME_KEY] = user.username
-            return redirect(url_for("index"))
+            return redirect(url_for('index'))
         return "Username already registered"
     else:
         return "Emails not equals"
@@ -168,78 +168,78 @@ def do_signup():
 
 # Account
 
-@app.route(prefix + "/account", methods=["GET"])
+@app.route(prefix + '/account', methods=['GET'])
 @login_required
 def show_account():
     subscriptions = subscription_service.get_order_by_months()
     return render_template('account.html', subscriptions=subscriptions)
 
 
-@app.route(prefix + "/_generate_cajastur_payment_data")
+@app.route(prefix + '/_generate_cajastur_payment_data')
 @login_required
 def generate_cajastur_payment_data():
-    months = request.args.get("months", 0, type=int)
+    months = request.args.get('months', 0, type=int)
     subscription = subscription_service.get_by_months(months)
     if subscription is None:
-        return redirect(url_for("index"))
+        return redirect(url_for('index'))
     else:
-        return_url = "http://156.35.95.67/movify/account/subscription/cajastur"
-        cancel_url = "http://156.35.95.67/movify/account"
+        return_url = 'http://156.35.95.67/movify/account/subscription/cajastur'
+        cancel_url = 'http://156.35.95.67/movify/account'
         cajastur_data = _get_cajastur_payment_data(subscription, return_url, cancel_url)
         return dumps(cajastur_data)
 
 
-@app.route(prefix + "/_generate_paypal_payment_data")
+@app.route(prefix + '/_generate_paypal_payment_data')
 @login_required
 def generate_paypal_payment_data():
-    months = request.args.get("months", 0, type=int)
+    months = request.args.get('months', 0, type=int)
     subscription = subscription_service.get_by_months(months)
     if subscription is None:
-        return redirect(url_for("index"))
+        return redirect(url_for('index'))
     else:
-        return_url = "http://156.35.95.67/movify/account/subscription/paypal"
-        cancel_url = "http://156.35.95.67/movify/account"
+        return_url = 'http://156.35.95.67/movify/account/subscription/paypal'
+        cancel_url = 'http://156.35.95.67/movify/account'
         paypal_data = _get_paypal_payment_data(subscription, return_url, cancel_url)
         return dumps(paypal_data)
 
 
 def _get_paypal_payment_data(subscription, return_url, cancel_url):
     price = subscription.price
-    quantity = "1"
-    name = "Movify " + subscription.name + " subscription"
+    quantity = '1'
+    name = 'Movify ' + subscription.name + ' subscription'
     description = subscription.description
     sku = _generate_product_name(subscription.months)
     payment_data = paypal_payment(price, quantity, name, description, sku, return_url, cancel_url)
-    url = payment_data["url"]
-    paypal_id = payment_data["id"]
+    url = payment_data['url']
+    paypal_id = payment_data['id']
     session[PAYPAL_ID_KEY] = _to_md5(paypal_id)
-    return {"url": url}
+    return {'url': url}
 
 
 def _get_cajastur_payment_data(subscription, return_url, cancel_url):
     operation = _generate_product_name(subscription.months)
     price = subscription.price
-    description = subscription.name
+    description = 'Movify ' + subscription.name + ' subscription'
     return cajastur_payment(operation, price, description, return_url, cancel_url)
 
 
-@app.route(prefix + "/account/subscription/paypal")
+@app.route(prefix + '/account/subscription/paypal')
 @login_required
 def proccess_paypal_payment():
-    paypal_id = request.args.get("paymentId")
+    paypal_id = request.args.get('paymentId')
     paypal_id_hash = session[PAYPAL_ID_KEY]
     if paypal_id_hash == _to_md5(paypal_id):
-        return "OK"
+        return 'OK'
     else:
-        return "FAIL"
+        return 'FAIL'
 
 
 # Movies
 
-@app.route(prefix + "/movies", methods=["GET"])
+@app.route(prefix + '/movies', methods=['GET'])
 #@login_required
 def find_movies():
-    title = request.args.get("title")
+    title = request.args.get('title')
     if title is None:
         movies = movie_service.get_all()
     else:
@@ -247,33 +247,33 @@ def find_movies():
     return dumps(movie_service.movies_to_dicts(movies))
 
 
-@app.route(prefix + "/movies/<int:movie_id>", methods=["GET"])
+@app.route(prefix + '/movies/<int:movie_id>', methods=['GET'])
 #@login_required
 def get_movie(movie_id):
     movie = movie_service.get(movie_id)
     return dumps(movie_service.movie_to_dict(movie))
 
 
-@app.route(prefix + "/categories/<category>/movies", methods=["GET"])
+@app.route(prefix + '/categories/<category>/movies', methods=['GET'])
 # @login_required
 def find_movies_by_category(category):
     movies = movie_service.find_by_category(category)
     return dumps(movie_service.movies_to_dicts(movies))
 
 
-@app.route(prefix + "/movies/<int:movie_id>/rates", methods=["POST"])
+@app.route(prefix + '/movies/<int:movie_id>/rates', methods=['POST'])
 @login_required
 def rate_movie(movie_id):
-    value = request.form["value"]
+    value = request.form['value']
     users = user_service.get_all()
     user = users[users.__len__() - 1]
     rate = rate_service.rate_movie(movie_id, user.username, value)
-    return redirect(url_for("show_movies"))
+    return redirect(url_for('show_movies'))
 
 
 # UTIL
 
-@app.route(prefix + "/util", methods=["GET"])
+@app.route(prefix + '/util', methods=['GET'])
 @login_required
 def show_util():
     movies = movie_service.get_all()
