@@ -17,6 +17,7 @@ __author__ = 'Dani Meana'
 SESSION_ID_KEY = 'session_id'
 USERNAME_KEY = 'username'
 PAYPAL_ID_KEY = 'paypal_id'
+MONTHS_KEY = 'months'
 
 
 def login_required(f):
@@ -253,6 +254,7 @@ def _get_paypal_payment_data(subscription, return_url, cancel_url):
     payment_data = paypal_payment(price, quantity, name, description, sku, return_url, cancel_url)
     url = payment_data['url']
     paypal_id = payment_data['id']
+    session[MONTHS_KEY] = subscription.months
     session[PAYPAL_ID_KEY] = _to_md5(paypal_id)
     return {'url': url}
 
@@ -269,8 +271,13 @@ def _get_cajastur_payment_data(subscription, return_url, cancel_url):
 def proccess_paypal_payment():
     paypal_id = request.args.get('paymentId')
     paypal_id_hash = session[PAYPAL_ID_KEY]
+    months = session[MONTHS_KEY]
+    session.pop(PAYPAL_ID_KEY)
+    session.pop(MONTHS_KEY)
+    username = session[USERNAME_KEY]
     if paypal_id_hash == _to_md5(paypal_id):
-        return 'OK'
+        user_service.increase_expiration(username, months)
+        return redirect(url_for('show_account'))
     else:
         return 'FAIL'
 
