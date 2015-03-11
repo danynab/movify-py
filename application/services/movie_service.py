@@ -34,7 +34,8 @@ def movie_to_dict(movie):
         rating = int((sum([review.rate for review in movie.reviews]) / movie.reviews.__len__()) * 100) / 100.0
     else:
         rating = 0
-    _dict = {'title': movie.title,
+    _dict = {'id': movie.id,
+             'title': movie.title,
              'year': movie.year,
              'duration': movie.duration,
              'categories': categories,
