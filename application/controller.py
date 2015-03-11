@@ -43,7 +43,8 @@ def _to_md5(string):
 
 def _generate_product_name(months):
     date_now = datetime.now()
-    date_now_str = str(date_now.year) + str(date_now.month) + str(date_now.day) + str(date_now.hour) + str(date_now.minute) + str(date_now.second)
+    date_now_str = str(date_now.year) + str(date_now.month) + str(date_now.day) + str(date_now.hour) + str(
+        date_now.minute) + str(date_now.second)
     return "Movify" + str(months) + "m" + date_now_str
 
 
@@ -193,7 +194,7 @@ def _get_paypal_payment_data(subscription, return_url, cancel_url):
     url = payment_data["url"]
     paypal_id = payment_data["id"]
     session[PAYPAL_ID_KEY] = _to_md5(paypal_id)
-    return {"url": payment_data["url"]}
+    return {"url": url}
 
 
 def _get_cajastur_payment_data(subscription, return_url, cancel_url):

@@ -13,7 +13,7 @@ commerce_data = {
 
 
 def cajastur_payment(operation, price, description, url_ok, url_error):
-    price = int(price*100)
+    price = int(price * 100)
     return {
         "operation": operation,
         "price": price,
