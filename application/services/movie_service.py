@@ -12,7 +12,7 @@ def get_all():
     return movie_persistence.get_all()
 
 
-def save(title, synopsis, year, time, director, cast, genre, url, cover):
-    movie = Movie(title, synopsis, year, time, director, cast, genre, url, cover)
+def save(title, year, duration, description, storyline, director, writers, stars, cover, background):
+    movie = Movie(title, year, duration, description, storyline, director, writers, stars, cover, background)
     movie_persistence.save(movie)
     return movie

@@ -86,6 +86,22 @@ def init():
             months=subscription["months"],
             price=subscription["price"])
 
+    for movie in data.movies:
+        movie_service.save(
+            title=movie["title"],
+            year=movie["year"],
+            duration=movie["duration"],
+            description=movie["description"],
+            storyline=movie["storyline"],
+            director=movie["director"],
+            writers=movie["writers"],
+            stars=movie["stars"],
+            cover="http://156.35.95.67/movify/static/covers/" + movie["cover"],
+            background="http://156.35.95.67/movify/static/background/" + movie["background"]
+        )
+
+    user_service.signup("dani", "dani", "dani@danynab.es")
+
     return redirect(url_for("index"))
 
 
@@ -136,7 +152,7 @@ def do_signup():
     if email.__len__() == 0:
         return "Email can not be empty"
     if email == confirm_email:
-        user = user_service.register(username, password, email)
+        user = user_service.signup(username, password, email)
         if user is not None:
             session_id = _calculate_session_id()
             session[SESSION_ID_KEY] = session_id
@@ -221,23 +237,7 @@ def proccess_paypal_payment():
 @login_required
 def show_movies():
     movies = movie_service.get_all()
-    return render_template('util.html', movies=movies)
-
-
-@app.route(prefix + "/movies", methods=["POST"])
-@login_required
-def save_movie():
-    title = request.form["title"]
-    synopsis = request.form["synopsis"]
-    year = request.form["year"]
-    time = request.form["time"]
-    director = request.form["director"]
-    cast = request.form["cast"]
-    genre = request.form["genre"]
-    url = request.form["url"]
-    cover = request.form["cover"]
-    movie = movie_service.save(title, synopsis, year, time, director, cast, genre, url, cover)
-    return redirect(url_for("show_movies"))
+    return dumps([movie.to_dict() for movie in movies])
 
 
 @app.route(prefix + "/movies/<int:movie_id>/rates", methods=["POST"])

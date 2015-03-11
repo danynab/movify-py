@@ -13,7 +13,7 @@ def get_all():
     return user_persistence.get_all()
 
 
-def register(username, password, email):
+def signup(username, password, email):
     user = get(username)
     if user is not None:
         return None
