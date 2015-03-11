@@ -1,5 +1,6 @@
 from application.model.movie import Movie
 from application.persistence import movie_persistence
+from application.services import review_service
 
 __author__ = 'Dani Meana'
 
@@ -39,8 +40,11 @@ def movie_to_dict(movie):
              'writers': movie.writers,
              'stars': movie.stars,
              'cover': movie.cover,
-             'background': movie.background}
-    return {k: v for k, v in _dict.items() if v}
+             'background': movie.background,
+             'reviews': review_service.reviews_to_dicts(movie.reviews),
+             'rating': sum([review.rate for review in
+                            movie.reviews]) / movie.reviews.__len__() if movie.reviews.__len__() > 0 else 0}
+    return {k: v for k, v in _dict.items() if v is not None}
 
 
 def movies_to_dicts(movies):

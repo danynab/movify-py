@@ -6,8 +6,9 @@ from flask.json import dumps
 from functools import wraps
 from application import app, prefix
 from flask import redirect, request, render_template, url_for, session, g
-from application.services import user_service, movie_service, rate_service, subscription_service
+from application.services import user_service, movie_service, review_service, subscription_service
 import hashlib
+import random
 
 
 __author__ = 'Dani Meana'
@@ -81,6 +82,9 @@ def init():
     db.drop_all()
     db.create_all()
 
+    user_dani = user_service.signup('dani', 'dani', 'dani@movify.es')
+    user_david = user_service.signup('david', 'david', 'david@movify.es')
+
     for subscription in data.subscriptions:
         subscription_service.save(
             name=subscription['name'],
@@ -89,7 +93,7 @@ def init():
             price=subscription['price'])
 
     for movie in data.movies:
-        movie_service.save(
+        movie_saved = movie_service.save(
             title=movie['title'],
             year=movie['year'],
             duration=movie['duration'],
@@ -99,11 +103,12 @@ def init():
             director=movie['director'],
             writers=movie['writers'],
             stars=movie['stars'],
-            cover='http://156.35.95.67/movify/static/covers/' + movie['cover'],
+            cover='http://156.35.95.67/movify/static/cov'
+                  'ers/' + movie['cover'],
             background='http://156.35.95.67/movify/static/background/' + movie['background']
         )
-
-    user_service.signup('dani', 'dani', 'dani@danynab.es')
+        review_service.rate_movie(movie_saved, user_dani, random.randint(0, 10), 'Comment 1')
+        review_service.rate_movie(movie_saved, user_david, random.randint(0, 10), 'Comment 2')
 
     return redirect(url_for('index'))
 
@@ -237,7 +242,7 @@ def proccess_paypal_payment():
 # Movies
 
 @app.route(prefix + '/movies', methods=['GET'])
-#@login_required
+# @login_required
 def find_movies():
     title = request.args.get('title')
     if title is None:
@@ -248,7 +253,7 @@ def find_movies():
 
 
 @app.route(prefix + '/movies/<int:movie_id>', methods=['GET'])
-#@login_required
+# @login_required
 def get_movie(movie_id):
     movie = movie_service.get(movie_id)
     return dumps(movie_service.movie_to_dict(movie))
@@ -267,7 +272,7 @@ def rate_movie(movie_id):
     value = request.form['value']
     users = user_service.get_all()
     user = users[users.__len__() - 1]
-    rate = rate_service.rate_movie(movie_id, user.username, value)
+    rate = review_service.rate_movie(movie_id, user.username, value)
     return redirect(url_for('show_movies'))
 
 
