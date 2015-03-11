@@ -30,6 +30,10 @@ def save(title, year, duration, categories, description, storyline, director, wr
 
 def movie_to_dict(movie):
     categories = movie.categories.split(',')
+    if movie.reviews.__len__() > 0:
+        rating = int((sum([review.rate for review in movie.reviews]) / movie.reviews.__len__()) * 100) / 100.0
+    else:
+        rating = 0
     _dict = {'title': movie.title,
              'year': movie.year,
              'duration': movie.duration,
@@ -42,8 +46,7 @@ def movie_to_dict(movie):
              'cover': movie.cover,
              'background': movie.background,
              'reviews': review_service.reviews_to_dicts(movie.reviews),
-             'rating': sum([review.rate for review in
-                            movie.reviews]) / movie.reviews.__len__() if movie.reviews.__len__() > 0 else 0}
+             'rating': rating}
     return {k: v for k, v in _dict.items() if v is not None}
 
 

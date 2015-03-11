@@ -84,6 +84,7 @@ def init():
 
     user_dani = user_service.signup('dani', 'dani', 'dani@movify.es')
     user_david = user_service.signup('david', 'david', 'david@movify.es')
+    user_marco = user_service.signup('marco', 'marco', 'marco@movify.es')
 
     for subscription in data.subscriptions:
         subscription_service.save(
@@ -107,8 +108,32 @@ def init():
                   'ers/' + movie['cover'],
             background='http://156.35.95.67/movify/static/background/' + movie['background']
         )
-        review_service.rate_movie(movie_saved, user_dani, random.randint(0, 10), 'Comment 1')
-        review_service.rate_movie(movie_saved, user_david, random.randint(0, 10), 'Comment 2')
+
+        review_service.rate_movie(movie_saved, user_dani, random.randint(0, 10),
+                                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vitae metus in '
+                                  'erat pellentesque tristique. Aliquam non tincidunt velit. Integer placerat luctus '
+                                  'velit, vitae lacinia nisi placerat id. Duis at sapien nulla. Duis scelerisque quam '
+                                  'et diam semper, a commodo libero rhoncus. Fusce bibendum id nibh eu rhoncus. Nulla '
+                                  'cursus, libero at maximus aliquam, leo justo efficitur urna, ac elementum sem nunc '
+                                  'eu tellus. Nullam fringilla porta venenatis. In pharetra quam pretium ex suscipit '
+                                  'luctus. Sed ornare varius tortor, ac ornare tellus tristique et. Aenean vel '
+                                  'ultrices tortor. Morbi tempus commodo quam nec ultrices. Vestibulum at enim magna. '
+                                  'Vivamus auctor semper libero varius rutrum. Ut vel fringilla nisi.')
+
+        review_service.rate_movie(movie_saved, user_david, random.randint(0, 10),
+                                  'Proin congue tincidunt orci, fringilla maximus urna rutrum in. Duis elementum '
+                                  'ultrices scelerisque. Praesent ante est, vestibulum in nulla vel, dignissim '
+                                  'interdum nisl. Morbi ullamcorper odio porttitor, interdum lacus non, viverra mi. '
+                                  'Ut ut congue libero. In fringilla orci ligula, mattis viverra lorem pulvinar sit '
+                                  'amet. Vestibulum et mi massa.')
+        review_service.rate_movie(movie_saved, user_marco, random.randint(0, 10),
+                                  'Sed sit amet semper nisl. Proin eget lorem ut felis auctor rutrum in a lectus. '
+                                  'Aenean eget lacinia elit. Nulla molestie risus a diam posuere, sit amet interdum '
+                                  'ipsum tempor. Nunc ac vehicula sem. Ut tincidunt libero leo, a accumsan nulla '
+                                  'iaculis ac. Nunc volutpat tempor justo et pellentesque. Aenean lorem metus, '
+                                  'hendrerit at velit sed, euismod porttitor eros. Curabitur elementum felis mauris, '
+                                  'in condimentum mauris placerat eget. Aliquam pellentesque ipsum quis consectetur '
+                                  'aliquet.')
 
     return redirect(url_for('index'))
 
