@@ -147,8 +147,23 @@ def show_account():
     return render_template('account.html', subscriptions=subscriptions)
 
 
-@app.route(prefix + "/_generate_payment_data")
-def generate_payment_data():
+@app.route(prefix + "/_generate_cajastur_payment_data")
+@login_required
+def generate_cajastur_payment_data():
+    months = request.args.get("months", 0, type=int)
+    subscription = subscription_service.get_by_months(months)
+    if subscription is None:
+        return redirect(url_for("index"))
+    else:
+        return_url = "http://www.google.com"
+        cancel_url = "http://www.apple.com"
+        cajastur_data = _get_cajastur_payment_data(subscription, return_url, cancel_url)
+        return dumps(cajastur_data)
+
+
+@app.route(prefix + "/_generate_paypal_payment_data")
+@login_required
+def generate_paypal_payment_data():
     months = request.args.get("months", 0, type=int)
     subscription = subscription_service.get_by_months(months)
     if subscription is None:
@@ -157,11 +172,7 @@ def generate_payment_data():
         return_url = "http://www.google.com"
         cancel_url = "http://www.apple.com"
         paypal_data = _get_paypal_payment_data(subscription, return_url, cancel_url)
-        cajastur_data = _get_cajastur_payment_data(subscription, return_url, cancel_url)
-        return dumps({
-            "paypal": paypal_data,
-            "cajastur": cajastur_data
-        })
+        return dumps(paypal_data)
 
 
 def _get_paypal_payment_data(subscription, return_url, cancel_url):
