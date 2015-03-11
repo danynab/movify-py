@@ -17,19 +17,19 @@ def find_by_title(title):
     return movie_persistence.find_by_title(title)
 
 
-def find_by_category(category):
-    return movie_persistence.find_by_category(category)
+def find_by_genre(genre):
+    return movie_persistence.find_by_genre(genre)
 
 
-def save(title, year, duration, categories, description, storyline, director, writers, stars, cover, background):
-    movie = Movie(title, year, duration, categories, description, storyline, director, writers, stars, cover,
+def save(title, year, duration, genres, description, storyline, director, writers, stars, cover, background):
+    movie = Movie(title, year, duration, genres, description, storyline, director, writers, stars, cover,
                   background)
     movie_persistence.save(movie)
     return movie
 
 
 def movie_to_dict(movie):
-    categories = movie.categories.split(',')
+    genres = movie.genres.split(',')
     if movie.reviews.__len__() > 0:
         rating = int((sum([review.rate for review in movie.reviews]) / movie.reviews.__len__()) * 100) / 100.0
     else:
@@ -38,7 +38,7 @@ def movie_to_dict(movie):
              'title': movie.title,
              'year': movie.year,
              'duration': movie.duration,
-             'categories': categories,
+             'genres': genres,
              'description': movie.description,
              'storyline': movie.storyline,
              'director': movie.director,

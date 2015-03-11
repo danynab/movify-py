@@ -8,7 +8,7 @@ class Movie(db.Model):
     title = db.Column(db.String)
     year = db.Column(db.Integer)
     duration = db.Column(db.Integer)
-    categories = db.Column(db.String)
+    genres = db.Column(db.String)
     description = db.Column(db.String)
     storyline = db.Column(db.String)
     director = db.Column(db.String)
@@ -17,12 +17,12 @@ class Movie(db.Model):
     cover = db.Column(db.String)
     background = db.Column(db.String)
 
-    def __init__(self, title, year, duration, categories, description, storyline, director, writers, stars, cover,
+    def __init__(self, title, year, duration, genres, description, storyline, director, writers, stars, cover,
                  background):
         self.title = title
         self.year = year
         self.duration = duration
-        self.categories = categories
+        self.genres = genres
         self.description = description
         self.storyline = storyline
         self.director = director
