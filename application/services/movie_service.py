@@ -27,7 +27,7 @@ def save(title, year, duration, genres, description, storyline, director, writer
 
 def movie_to_dict(movie):
     if movie.reviews.__len__() > 0:
-        rating = int((sum([review.rate for review in movie.reviews]) / movie.reviews.__len__()) * 100) / 100.0
+        rating = int((sum([review.rating for review in movie.reviews]) / movie.reviews.__len__()) * 100) / 100.0
     else:
         rating = 0
     _dict = {'id': movie.id,
