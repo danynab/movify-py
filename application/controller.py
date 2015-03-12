@@ -122,7 +122,7 @@ def init():
             trailer='http://156.35.95.67/movify/static/trailers/' + movie['trailer']
         )
 
-        review_service.rate_movie(movie_saved, user_dani, random.randint(0, 10),
+        review_service.rate_movie(movie_saved, user_dani, random.randint(0, 5),
                                   'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vitae metus in '
                                   'erat pellentesque tristique. Aliquam non tincidunt velit. Integer placerat luctus '
                                   'velit, vitae lacinia nisi placerat id. Duis at sapien nulla. Duis scelerisque quam '
@@ -133,14 +133,14 @@ def init():
                                   'ultrices tortor. Morbi tempus commodo quam nec ultrices. Vestibulum at enim magna. '
                                   'Vivamus auctor semper libero varius rutrum. Ut vel fringilla nisi.')
 
-        review_service.rate_movie(movie_saved, user_david, random.randint(0, 10),
+        review_service.rate_movie(movie_saved, user_david, random.randint(0, 5),
                                   'Proin congue tincidunt orci, fringilla maximus urna rutrum in. Duis elementum '
                                   'ultrices scelerisque. Praesent ante est, vestibulum in nulla vel, dignissim '
                                   'interdum nisl. Morbi ullamcorper odio porttitor, interdum lacus non, viverra mi. '
                                   'Ut ut congue libero. In fringilla orci ligula, mattis viverra lorem pulvinar sit '
                                   'amet. Vestibulum et mi massa.')
 
-        review_service.rate_movie(movie_saved, user_marco, random.randint(0, 10),
+        review_service.rate_movie(movie_saved, user_marco, random.randint(0, 5),
                                   'Sed sit amet semper nisl. Proin eget lorem ut felis auctor rutrum in a lectus. '
                                   'Aenean eget lacinia elit. Nulla molestie risus a diam posuere, sit amet interdum '
                                   'ipsum tempor. Nunc ac vehicula sem. Ut tincidunt libero leo, a accumsan nulla '
@@ -149,7 +149,7 @@ def init():
                                   'in condimentum mauris placerat eget. Aliquam pellentesque ipsum quis consectetur '
                                   'aliquet.')
 
-        review_service.rate_movie(movie_saved, user_pepe, random.randint(0, 10),
+        review_service.rate_movie(movie_saved, user_pepe, random.randint(0, 5),
                                   'Praesent ultrices, nulla vitae consectetur imperdiet, nulla purus condimentum elit, '
                                   'ac facilisis nisi ligula commodo purus. Duis eget metus mi. Pellentesque habitant '
                                   'morbi tristique senectus et netus et malesuada fames ac turpis egestas. '
@@ -164,7 +164,7 @@ def init():
                                   'nisl gravida sed. Aliquam sit amet risus quis ligula vulputate semper. Aenean '
                                   'volutpat tellus nec nunc consequat, eget feugiat tortor placerat.')
 
-        review_service.rate_movie(movie_saved, user_paco, random.randint(0, 10),
+        review_service.rate_movie(movie_saved, user_paco, random.randint(0, 5),
                                   'Proin non felis at tellus consequat viverra at ut nisl. In laoreet, tellus id '
                                   'feugiat maximus, libero dolor sagittis purus, vel dignissim libero erat quis '
                                   'turpis. Vestibulum tincidunt lobortis eleifend. Sed sit amet rutrum leo, quis '
