@@ -8,7 +8,6 @@ class Movie(db.Model):
     title = db.Column(db.String)
     year = db.Column(db.Integer)
     duration = db.Column(db.Integer)
-    genres = db.Column(db.String)
     description = db.Column(db.String)
     storyline = db.Column(db.String)
     director = db.Column(db.String)

@@ -21,6 +21,57 @@ subscriptions = [
     }
 ]
 
+genres = [
+    {
+        "name": "action",
+        "image": "action.jpg"
+    },
+    {
+        "name": "adventure",
+        "image": "adventure.jpg"
+    },
+    {
+        "name": "animation",
+        "image": "animation.jpg"
+    },
+    {
+        "name": "biography",
+        "image": "biography.jpg"
+    },
+    {
+        "name": "comedy",
+        "image": "comedy.jpg"
+    },
+    {
+        "name": "crime",
+        "image": "crime.jpg"
+    },
+    {
+        "name": "drama",
+        "image": "drama.jpg"
+    },
+    {
+        "name": "fantasy",
+        "image": "fantasy.jpg"
+    },
+    {
+        "name": "mystery",
+        "image": "mystery.jpg"
+    },
+    {
+        "name": "sci-fi",
+        "image": "sci-fi.jpg"
+    },
+    {
+        "name": "thriller",
+        "image": "thriller.jpg"
+    },
+    {
+        "name": "war",
+        "image": "war.jpg"
+    }
+]
+
 movies = [
     {
         "title": "Avengers: Age of Ultron",

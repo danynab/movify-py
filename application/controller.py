@@ -7,7 +7,7 @@ from flask.json import dumps
 from functools import wraps
 from application import app, prefix
 from flask import redirect, request, render_template, url_for, session, g
-from application.services import user_service, movie_service, review_service, subscription_service
+from application.services import user_service, movie_service, review_service, subscription_service, genre_service
 import hashlib
 import random
 
@@ -96,6 +96,12 @@ def init():
             months=subscription['months'],
             price=subscription['price'])
 
+    for genre in data.genres:
+        genre_service.save(
+            name=genre["name"],
+            image='http://156.35.95.67/movify/static/genres/' + genre["image"]
+        )
+
     for movie in data.movies:
         try:
             movie_url = 'http://156.35.95.67/movify/static/movies/' + movie['movie']
@@ -107,7 +113,7 @@ def init():
             title=movie['title'],
             year=movie['year'],
             duration=movie['duration'],
-            genres=','.join(movie['categories']),
+            genres=[genre_service.get(genre) for genre in movie['categories']],
             description=movie['description'],
             storyline=movie['storyline'],
             director=movie['director'],
@@ -327,13 +333,6 @@ def get_movie(movie_id):
     return dumps(movie_service.movie_to_dict(movie))
 
 
-@app.route(prefix + '/genres/<genre>/movies', methods=['GET'])
-# @login_required
-def find_movies_by_genre(genre):
-    movies = movie_service.find_by_genre(genre)
-    return dumps(movie_service.movies_to_dicts(movies))
-
-
 @app.route(prefix + '/movies/<int:movie_id>/rates', methods=['POST'])
 @login_required
 def rate_movie(movie_id):
@@ -342,6 +341,29 @@ def rate_movie(movie_id):
     user = users[users.__len__() - 1]
     rate = review_service.rate_movie(movie_id, user.username, value)
     return redirect(url_for('show_movies'))
+
+
+# Genres
+
+@app.route(prefix + '/genres', methods=["GET"])
+# @login_required
+def find_genres():
+    genres = genre_service.get_all()
+    return dumps(genre_service.genres_to_dicts(genres, add_movies=False))
+
+
+@app.route(prefix + '/genres/<genre_name>', methods=["GET"])
+# @login_required
+def get_genre(genre_name):
+    genre = genre_service.get(genre_name)
+    return dumps(genre_service.genre_to_dict(genre))
+
+
+@app.route(prefix + '/genres/<genre_name>/movies', methods=['GET'])
+# @login_required
+def find_movies_by_genre(genre_name):
+    movies = genre_service.get_movies(genre_name)
+    return dumps(movie_service.movies_to_dicts(movies))
 
 
 # UTIL

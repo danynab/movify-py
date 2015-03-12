@@ -16,10 +16,6 @@ def find_by_title(title):
     return Movie.query.filter(Movie.title.ilike('%' + title + '%')).all()
 
 
-def find_by_genre(genre):
-    return Movie.query.filter(Movie.genres.ilike('%' + genre + '%')).all()
-
-
 def save(movie):
     db.session.add(movie)
     db.session.commit()

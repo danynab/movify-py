@@ -1,6 +1,6 @@
 from application.model.movie import Movie
 from application.persistence import movie_persistence
-from application.services import review_service
+from application.services import review_service, genre_service
 
 __author__ = 'Dani Meana'
 
@@ -17,10 +17,6 @@ def find_by_title(title):
     return movie_persistence.find_by_title(title)
 
 
-def find_by_genre(genre):
-    return movie_persistence.find_by_genre(genre)
-
-
 def save(title, year, duration, genres, description, storyline, director, writers, stars, cover, background, movie,
          trailer):
     movie = Movie(title, year, duration, genres, description, storyline, director, writers, stars, cover,
@@ -30,7 +26,6 @@ def save(title, year, duration, genres, description, storyline, director, writer
 
 
 def movie_to_dict(movie):
-    genres = movie.genres.split(',')
     if movie.reviews.__len__() > 0:
         rating = int((sum([review.rate for review in movie.reviews]) / movie.reviews.__len__()) * 100) / 100.0
     else:
@@ -39,7 +34,7 @@ def movie_to_dict(movie):
              'title': movie.title,
              'year': movie.year,
              'duration': movie.duration,
-             'genres': genres,
+             'genres': genre_service.genres_to_dicts(movie.genres, add_movies=False),
              'description': movie.description,
              'storyline': movie.storyline,
              'director': movie.director,
