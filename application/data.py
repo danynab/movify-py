@@ -119,7 +119,9 @@ movies = [
         "writers": "Jane Goldman (screenplay), Matthew Vaughn (screenplay)",
         "stars": "Colin Firth, Taron Egerton, Samuel L. Jackson",
         "cover": "9tTJz8D4xYQK2tp97xMQNccC.jpg",
-        "background": "4RZwY6HweJfbRYETsE4QSEZk.jpg"
+        "background": "4RZwY6HweJfbRYETsE4QSEZk.jpg",
+        "movie": "PhJxBnKjeGFJ8y5DPS6Sjkg4.mp4",
+        "trailer": "PhJxBnKjeGFJ8y5DPS6Sjkg4.mp4"
     },
     {
         "title": "Chappie",
@@ -195,7 +197,9 @@ movies = [
         "writers": "Jason Hall, Chris Kyle (book)",
         "stars": "Bradley Cooper, Sienna Miller, Kyle Gallner",
         "cover": "ZejCEjDhV4GJXWbN8VRWKpfP.jpg",
-        "background": "Hpm67cWJwqJ4ztxphX7WqhrF.jpg"
+        "background": "Hpm67cWJwqJ4ztxphX7WqhrF.jpg",
+        "movie": "e2y8qWFqR2QCkfffqekVR97j.mp4",
+        "trailer": "e2y8qWFqR2QCkfffqekVR97j.mp4"
     },
     {
         "title": "Exodus: Gods and Kingsman",
@@ -217,7 +221,9 @@ movies = [
         "writers": "Adam Cooper, Bill Collage",
         "stars": "Christian Bale, Joel Edgerton, Ben Kingsley",
         "cover": "sABWBnndZwRRAm9cMh7UarXx.jpg",
-        "background": "5ZKNreqVVqwqFAvjEMCPmkaX.jpg"
+        "background": "5ZKNreqVVqwqFAvjEMCPmkaX.jpg",
+        "movie": "rxfmAQHXD9RxKmfVCrxp2Hg7.mp4",
+        "trailer": "rxfmAQHXD9RxKmfVCrxp2Hg7.mp4"
     },
     {
         "title": "Jupiter Ascending",
@@ -241,7 +247,9 @@ movies = [
         "writers": "Andy Wachowski (as The Wachowskis) , Lana Wachowski (as The Wachowskis)",
         "stars": "Channing Tatum, Mila Kunis, Eddie Redmayne",
         "cover": "HegZdb4DT5Xn4QmpdBWp3Vy6.jpg",
-        "background": "vcSDDmFBXx7DbB6djQfwQuKC.jpg"
+        "background": "vcSDDmFBXx7DbB6djQfwQuKC.jpg",
+        "movie": "3ESZQnNa7TWKtHXNGd6FyJYb.mp4",
+        "trailer": "3ESZQnNa7TWKtHXNGd6FyJYb.mp4"
     },
     {
         "title": "Kill Me Three Times",
@@ -259,7 +267,9 @@ movies = [
         "writers": "James McFarland",
         "stars": "Teresa Palmer, Simon Pegg, Luke Hemsworth",
         "cover": "qWAkF53X7hcknDdhmKR8rkhR.jpg",
-        "background": "e3nWM6cg7fMJH7da6FeHhS5E.jpg"
+        "background": "e3nWM6cg7fMJH7da6FeHhS5E.jpg",
+        "movie": "eZnYpMPVPdQ2CnJyLn6fZAkZ.mp4",
+        "trailer": "eZnYpMPVPdQ2CnJyLn6fZAkZ.mp4"
     },
     {
         "title": "Furious 7",
@@ -277,7 +287,9 @@ movies = [
         "writers": "Chris Morgan, Gary Scott Thompson (characters)",
         "stars": "Vin Diesel, Paul Walker, Dwayne Johnson",
         "cover": "eNvmqqVV7AJpq6vCgRFGAFqQ.jpg",
-        "background": "XvtdhFY72tQQAGjpPkcdxpq9.jpg"
+        "background": "XvtdhFY72tQQAGjpPkcdxpq9.jpg",
+        "movie": "uXnt4NvFgsS2uV54C48CAgrq.mp4",
+        "trailer": "uXnt4NvFgsS2uV54C48CAgrq.mp4"
     },
     {
         "title": "Fury",
@@ -301,7 +313,9 @@ movies = [
         "writers": "David Ayer",
         "stars": "Brad Pitt, Shia LaBeouf, Logan Lerman",
         "cover": "EdnRKspxGKL4dVuYwjew6AdG.jpg",
-        "background": "4XCUX6JHQzStYcMfMhrdpMtW.jpg"
+        "background": "4XCUX6JHQzStYcMfMhrdpMtW.jpg",
+        "movie": "SVerMyyGUcj78MnTLruCsLJb.mp4",
+        "trailer": "SVerMyyGUcj78MnTLruCsLJb.mp4"
     },
     {
         "title": "John Wick",
@@ -323,7 +337,9 @@ movies = [
         "writers": "Derek Kolstad (screenplay)",
         "stars": "Keanu Reeves, Michael Nyqvist, Alfie Allen",
         "cover": "e2BnNqRpBshuvrypbpJw7Frp.jpg",
-        "background": "SakQnp8TLEMtv6NMrHFFZwLU.jpg"
+        "background": "SakQnp8TLEMtv6NMrHFFZwLU.jpg",
+        "movie": "3vyDeDhK65c5NthV6q34MKwQ.mp4",
+        "trailer": "3vyDeDhK65c5NthV6q34MKwQ.mp4"
     },
     {
         "title": "Guardians of the Galaxy",
@@ -369,7 +385,9 @@ movies = [
         "writers": "Brad Ingelsby",
         "stars": "Liam Neeson, Ed Harris, Joel Kinnaman",
         "cover": "xN5dPL2UhAEEftRNgwqdJK8x.jpg",
-        "background": "7zfnnmHwxQn5pQKhJnmMzGfL.jpg"
+        "background": "7zfnnmHwxQn5pQKhJnmMzGfL.jpg",
+        "movie": "hRmn8bf7VNayMbVdzgN9syYy.mp4",
+        "trailer": "hRmn8bf7VNayMbVdzgN9syYy.mp4"
     },
     {
         "title": "The Maze Runner",
@@ -394,7 +412,9 @@ movies = [
         "writers": "Noah Oppenheim (screenplay), Grant Pierce Myers (screenplay)",
         "stars": "Dylan O'Brien, Kaya Scodelario, Will Poulter",
         "cover": "eReawsqkdUGcqYQvN5BgumrA.jpg",
-        "background": "tZXjZgXkJGcG28h5sCtwq8yb.jpg"
+        "background": "tZXjZgXkJGcG28h5sCtwq8yb.jpg",
+        "movie": "ReCxsUwd9JzEhzXWc5aHw87d.mp4",
+        "trailer": "ReCxsUwd9JzEhzXWc5aHw87d.mp4"
     },
     {
         "title": "Lucy",
@@ -418,7 +438,9 @@ movies = [
         "writers": "Luc Besson",
         "stars": "Scarlett Johansson, Morgan Freeman, Min-sik Choi",
         "cover": "dw2SLRZvVspyG69kKnUu75nA.jpg",
-        "background": "PJj6EYSXZLZcPUVTgdEy4whm.jpg"
+        "background": "PJj6EYSXZLZcPUVTgdEy4whm.jpg",
+        "movie": "pbfjQR7e4GtVcUz5yrF5tCKC.mp4",
+        "trailer": "pbfjQR7e4GtVcUz5yrF5tCKC.mp4"
     },
     {
         "title": "The Equalizer",
@@ -444,7 +466,9 @@ movies = [
         "writers": "Richard Wenk, Michael Sloan (television series)",
         "stars": "Denzel Washington, Marton Csokas, Chloë Grace Moretz",
         "cover": "tKb5h6VYcFjfLh3AYmR9qYTc.jpg",
-        "background": "bkJJ385tT9pLwrA4fndn4cfe.jpg"
+        "background": "bkJJ385tT9pLwrA4fndn4cfe.jpg",
+        "movie": "4rtKhDpR6ccumUFSEteSqcam.mp4",
+        "trailer": "4rtKhDpR6ccumUFSEteSqcam.mp4"
     },
     {
         "title": "Edge of Tomorrow",
@@ -469,7 +493,9 @@ movies = [
         "writers": "Christopher McQuarrie (screenplay), Jez Butterworth (screenplay)",
         "stars": "Tom Cruise, Emily Blunt, Bill Paxton",
         "cover": "vMyByEvtc6naN9ZWyvxfH5Rp.jpg",
-        "background": "T99DzjxpTnKJZP3sjcEdGu8V.jpg"
+        "background": "T99DzjxpTnKJZP3sjcEdGu8V.jpg",
+        "movie": "R88Jxzs7mnkpUBpPsYTwxbg5.mp4",
+        "trailer": "R88Jxzs7mnkpUBpPsYTwxbg5.mp4"
     },
     {
         "title": "The Hunger Games: Mockingjay - Part 1",
@@ -489,6 +515,8 @@ movies = [
         "writers": "Peter Craig (screenplay), Danny Strong (screenplay)",
         "stars": "Jennifer Lawrence, Josh Hutcherson, Liam Hemsworth",
         "cover": "K4a9MYp7kjvvAkAsSM3WuSME.jpg",
-        "background": "GYDsRrwREvwEFcK6mAm3U6kR.jpg"
+        "background": "GYDsRrwREvwEFcK6mAm3U6kR.jpg",
+        "movie": "chfCQf4wKDAWVEyS9nZZyrtW.mp4",
+        "trailer": "chfCQf4wKDAWVEyS9nZZyrtW.mp4"
     }
 ]
