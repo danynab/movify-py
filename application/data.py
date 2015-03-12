@@ -44,7 +44,9 @@ movies = [
         "writers": "Joss Whedon, Stan Lee (comic book)",
         "stars": "Robert Downey Jr., Chris Evans, Mark Ruffalo",
         "cover": "sDQgTHVALB3y687Xn9MWtVDC.jpg",
-        "background": "WW78ZFqaF56h8GH2uKEHKdfL.jpg"
+        "background": "WW78ZFqaF56h8GH2uKEHKdfL.jpg",
+        "movie": "xGjhukFzGm8ScfAFJupGGNHB.mp4",
+        "trailer": "xGjhukFzGm8ScfAFJupGGNHB.mp4"
     },
     {
         "title": "Kingsman: The Secret Service",
@@ -89,7 +91,9 @@ movies = [
         "writers": "Neill Blomkamp, Terri Tatchell",
         "stars": "Sharlto Copley, Dev Patel, Hugh Jackman",
         "cover": "L3GdHjgBC2wsZEenhumQgdKn.jpg",
-        "background": "buyjuAkQDSUb9DPaJpRRXd2t.jpg"
+        "background": "buyjuAkQDSUb9DPaJpRRXd2t.jpg",
+        "movie": "9VdWVDXhSgG4c5NRpaBrzWgm.mp4",
+        "trailer": "9VdWVDXhSgG4c5NRpaBrzWgm.mp4"
     },
     {
         "title": "Big Hero 6",
@@ -113,7 +117,9 @@ movies = [
         "writers": "Jordan Roberts (screenplay), Daniel Gerson (screenplay)",
         "stars": "Ryan Potter, Scott Adsit, Jamie Chung",
         "cover": "h6CvveAfUNBextzkxvzUPMJq.jpg",
-        "background": "vCF6pbGGkL4ktjJQdWnNK2HA.jpg"
+        "background": "vCF6pbGGkL4ktjJQdWnNK2HA.jpg",
+        "movie": "d37abNvu2uvMPadRfck99Tyn.mp4",
+        "trailer": "d37abNvu2uvMPadRfck99Tyn.mp4"
     },
     {
         "title": "American Sniper",
@@ -287,7 +293,9 @@ movies = [
         "writers": "James Gunn, Nicole Perlman",
         "stars": "Chris Pratt, Vin Diesel, Bradley Cooper",
         "cover": "AvCeXp2SnZTPV5F6XvAs8Qsn.jpg",
-        "background": "DvMfAbh2b9PYfBjYgdj5bzyf.jpg"
+        "background": "DvMfAbh2b9PYfBjYgdj5bzyf.jpg",
+        "movie": "QAjfpyseWB6W4KJ5ycMrcv4B.mp4",
+        "trailer": "QAjfpyseWB6W4KJ5ycMrcv4B.mp4"
     },
     {
         "title": "Run All Night",

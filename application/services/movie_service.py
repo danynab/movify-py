@@ -21,9 +21,10 @@ def find_by_genre(genre):
     return movie_persistence.find_by_genre(genre)
 
 
-def save(title, year, duration, genres, description, storyline, director, writers, stars, cover, background):
+def save(title, year, duration, genres, description, storyline, director, writers, stars, cover, background, movie,
+         trailer):
     movie = Movie(title, year, duration, genres, description, storyline, director, writers, stars, cover,
-                  background)
+                  background, movie, trailer)
     movie_persistence.save(movie)
     return movie
 
@@ -46,6 +47,8 @@ def movie_to_dict(movie):
              'stars': movie.stars,
              'cover': movie.cover,
              'background': movie.background,
+             'movie': movie.movie,
+             'trailer': movie.trailer,
              'reviews': review_service.reviews_to_dicts(movie.reviews),
              'rating': rating}
     return {k: v for k, v in _dict.items() if v is not None}

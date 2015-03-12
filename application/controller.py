@@ -97,6 +97,12 @@ def init():
             price=subscription['price'])
 
     for movie in data.movies:
+        try:
+            movie_url = 'http://156.35.95.67/movify/static/movies/' + movie['movie']
+            trailer_url = 'http://156.35.95.67/movify/static/trailers/' + movie['trailer']
+        except KeyError:
+            movie_url = ''
+            trailer_url = ''
         movie_saved = movie_service.save(
             title=movie['title'],
             year=movie['year'],
@@ -109,7 +115,9 @@ def init():
             stars=movie['stars'],
             cover='http://156.35.95.67/movify/static/cov'
                   'ers/' + movie['cover'],
-            background='http://156.35.95.67/movify/static/background/' + movie['background']
+            background='http://156.35.95.67/movify/static/background/' + movie['background'],
+            movie=movie_url,
+            trailer=trailer_url
         )
 
         review_service.rate_movie(movie_saved, user_dani, random.randint(0, 10),

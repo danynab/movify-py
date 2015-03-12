@@ -16,9 +16,11 @@ class Movie(db.Model):
     stars = db.Column(db.String)
     cover = db.Column(db.String)
     background = db.Column(db.String)
+    movie = db.Column(db.String)
+    trailer = db.Column(db.String)
 
     def __init__(self, title, year, duration, genres, description, storyline, director, writers, stars, cover,
-                 background):
+                 background, movie, trailer):
         self.title = title
         self.year = year
         self.duration = duration
@@ -30,3 +32,5 @@ class Movie(db.Model):
         self.stars = stars
         self.cover = cover
         self.background = background
+        self.movie = movie
+        self.trailer = trailer
