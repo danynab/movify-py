@@ -47,6 +47,20 @@ def login_required(f):
     return decorated_function
 
 
+def subscription_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        username = session[USERNAME_KEY]
+        user = user_service.get(username)
+        expiration = user.expiration
+        current_millis = int(time() * 1000)
+        if expiration > current_millis:
+            return f(*args, **kwargs)
+        return redirect(url_for('show_account'))
+
+    return decorated_function
+
+
 def _generate_product_name(months):
     date_now = datetime.now()
     date_now_str = str(date_now.year) + str(date_now.month) + str(date_now.day) + str(date_now.hour) + str(
@@ -399,6 +413,7 @@ def find_movies_by_genre(genre_name):
 
 @app.route(prefix + '/webplayer', methods=['GET'])
 @login_required
+@subscription_required
 def show_webplayer():
     random_movies = movie_service.get_random(6)
     all_movies = movie_service.get_all()
