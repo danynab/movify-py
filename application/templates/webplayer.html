@@ -48,7 +48,7 @@
                 <h3>Discover what's new</h3>
 
                 <div class="row">
-                    {% for movie in movies %}
+                    {% for movie in random_movies %}
                     <div class="col-md-2 col-sm-4 movie" data-movie-id="{{ movie.id }}">
                         <div class="cover">
                             <img class="img-responsive" src="{{ movie.cover }}"/>
@@ -121,6 +121,19 @@
     <section id="your-movies" class="page">
         <div class="page-content container">
             <h1>Your movies</h1>
+
+            <div class="row">
+                {% for movie in all_movies %}
+                <div class="col-md-2 col-sm-4 movie" data-movie-id="{{ movie.id }}">
+                    <div class="cover">
+                        <img class="img-responsive" src="{{ movie.cover }}"/>
+                    </div>
+                    <div class="info">
+                        <p>{{ movie.description }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
         </div>
     </section>
 

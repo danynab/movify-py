@@ -400,9 +400,10 @@ def find_movies_by_genre(genre_name):
 @app.route(prefix + '/webplayer', methods=['GET'])
 @login_required
 def show_webplayer():
-    movies = movie_service.get_recents(6)
+    random_movies = movie_service.get_random(6)
+    all_movies = movie_service.get_all()
     genres = genre_service.get_all()
-    return render_template('webplayer.html', movies=movies, genres=genres)
+    return render_template('webplayer.html', random_movies=random_movies, all_movies=all_movies, genres=genres)
 
 
 # UTIL

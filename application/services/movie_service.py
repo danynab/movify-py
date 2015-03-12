@@ -1,6 +1,7 @@
 from application.model.movie import Movie
 from application.persistence import movie_persistence
 from application.services import review_service, genre_service
+import random
 
 __author__ = 'Dani Meana'
 
@@ -13,8 +14,9 @@ def get_all():
     return movie_persistence.get_all()
 
 
-def get_recents(count):
-    return movie_persistence.get_recents(count)
+def get_random(count):
+    ids = [movie.id for movie in get_all()]
+    return [get(movie_id) for movie_id in random.sample(ids, count)]
 
 
 def search(text):

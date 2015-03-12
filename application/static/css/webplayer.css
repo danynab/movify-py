@@ -4,8 +4,8 @@ html, body {
 }
 
 body {
-  background-color: #121314;
-  color: white;
+    background-color: #121314;
+    color: white;
     font-family: Raleway, HelveticaNeue, 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 300;
     overflow-x: hidden;
@@ -13,14 +13,14 @@ body {
 }
 
 nav {
-  background-color: #1c1c1f;
-  bottom: 0;
-  left: 0;
-  position: fixed;
-  text-align: center;
-  top: 0;
-  max-width: 90px;
-  z-index: 100;
+    background-color: #1c1c1f;
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    text-align: center;
+    top: 0;
+    max-width: 90px;
+    z-index: 100;
 }
 
 nav img {
@@ -30,13 +30,13 @@ nav img {
 }
 
 nav h1 {
-  font-size: 1.3rem;
-  font-weight: bold;
-  letter-spacing: 0.05em;
+    font-size: 1.3rem;
+    font-weight: bold;
+    letter-spacing: 0.05em;
 }
 
 nav a, nav a:visited {
-  color: white;
+    color: white;
     text-decoration: none !important;
 }
 
@@ -45,7 +45,7 @@ nav a:hover {
 }
 
 nav a span.nav-next {
-  display: block;
+    display: block;
 }
 
 nav ul {
@@ -53,30 +53,30 @@ nav ul {
 }
 
 nav li {
-  list-style-type: none;
+    list-style-type: none;
     padding: 0.5em 0;
 }
 
 nav li a, nav li a:visited {
-  border-left: 3px solid transparent;
-  color: #88898c;
-  display: block;
-  width: 100%;
+    border-left: 3px solid transparent;
+    color: #88898c;
+    display: block;
+    width: 100%;
 }
 
 nav li a.active {
-  color: white;
-  border-left: 3px solid #84bd00;
-  box-sizing: border-box;
+    color: white;
+    border-left: 3px solid #84bd00;
+    box-sizing: border-box;
 }
 
 nav li a:before, nav li a:after {
-  font-size: 25px !important;
-  margin-left: 0 !important;
+    font-size: 25px !important;
+    margin-left: 0 !important;
 }
 
 nav li a span.nav-next {
-  font-size: 1.33rem;
+    font-size: 1.33rem;
 }
 
 #search {
@@ -151,7 +151,7 @@ nav li a span.nav-next {
 }
 
 #content {
-  margin-left: 90px;
+    margin-left: 90px;
     height: 100%;
     margin-right: 0;
     transform-style: preserve-3d;
@@ -166,7 +166,7 @@ nav li a span.nav-next {
 }
 
 #content .page .page-content {
-  padding: 1.5em;
+    padding: 1.5em;
 }
 
 #content .page:not(.current) {
@@ -209,6 +209,7 @@ nav li a span.nav-next {
 
 #content .genre h4 a, #content .genre h4 a:hover, #content .genre h4 a:visited {
     color: white;
+    text-transform: capitalize;
     text-decoration: none;
 }
 
@@ -256,7 +257,7 @@ nav li a span.nav-next {
 }
 
 #browse h3 {
-  border-bottom: 1px solid #222;
+    border-bottom: 1px solid #222;
     font-size: 1.8rem;
     font-weight: 300;
     letter-spacing: 0.05em;
