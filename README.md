@@ -25,7 +25,7 @@ Clonar el repositorio y acceder a él:
 
 ```bash
 git clone https://github.com/danynab/movify-py.git
-cd DIT-server
+cd movify-py
 ```
 
 Crear el entorno virtual:
