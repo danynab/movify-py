@@ -8,14 +8,15 @@ def get_by_movie_id(movie_id):
     return review_persistence.get_by_movie_id(movie_id)
 
 
-def rate_movie(movie, user, rate, comment):
-    review = Review(user, movie, rate, comment)
-    return review_persistence.save(review)
+def rate_movie(user, movie, rating, comment):
+    review = Review(user, movie, rating, comment)
+    review_persistence.save(review)
+    return review
 
 
 def review_to_dict(review):
-    _dict = {'username': review.username,
-             'rate': review.rate,
+    _dict = {'username': review.user.username,
+             'rating': review.rating,
              'comment': review.comment}
     return {k: v for k, v in _dict.items() if v is not None}
 

@@ -8,11 +8,11 @@ class Review(db.Model):
     username = db.Column(db.Integer, db.ForeignKey('user.username'), primary_key=True)
     movie = db.relationship('Movie', backref=db.backref('reviews'))
     user = db.relationship('User', backref=db.backref('reviews'))
-    rate = db.Column(db.Float)
+    rating = db.Column(db.Float)
     comment = db.Column(db.String)
 
-    def __init__(self, user, movie, rate, comment):
+    def __init__(self, user, movie, rating, comment):
         self.user = user
         self.movie = movie
-        self.rate = rate
+        self.rating = rating
         self.comment = comment
