@@ -90,6 +90,7 @@ def init():
     user_marco = user_service.signup('marco', 'marco', 'marco@movify.es')
     user_paco = user_service.signup('paco', 'paco', 'paco@movify.es')
     user_pepe = user_service.signup('pepe', 'pepe', 'pepe@movify.es')
+    user_juan = user_service.signup('juan', 'juan', 'juan@movify.es')
 
     for subscription in data.subscriptions:
         subscription_service.save(
@@ -354,14 +355,16 @@ def get_movie(movie_id):
     return dumps(movie_service.movie_to_dict(movie))
 
 
-@app.route(prefix + '/movies/<int:movie_id>/rates', methods=['POST'])
-@login_required
+@app.route(prefix + '/movies/<int:movie_id>/reviews', methods=['POST'])
+# @login_required
 def rate_movie(movie_id):
-    value = request.form['value']
+    comment = request.args.get('comment', '', type=str)
+    rating = float(request.args.get('rating', 0))
     users = user_service.get_all()
     user = users[users.__len__() - 1]
-    rate = review_service.rate_movie(movie_id, user.username, value)
-    return redirect(url_for('show_movies'))
+    movie = movie_service.get(movie_id)
+    review = review_service.rate_movie(user, movie, rating, comment)
+    return dumps(review_service.review_to_dict(review))
 
 
 # Genres
