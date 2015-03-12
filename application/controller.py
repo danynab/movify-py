@@ -364,12 +364,13 @@ def get_movie(movie_id):
 @app.route(prefix + '/movies/<int:movie_id>/reviews', methods=['POST'])
 # @login_required
 def rate_movie(movie_id):
-    comment = request.args.get('comment', '', type=str)
-    rating = float(request.args.get('rating', 0))
+    request.get_json()['comment']
+    comment = request.get_json()['comment']
+    rating = request.get_json()['rating']
     users = user_service.get_all()
     user = users[users.__len__() - 1]
     movie = movie_service.get(movie_id)
-    review = review_service.rate_movie(user, movie, rating, comment)
+    review = review_service.rate_movie(user, movie, float(rating if rating else 0), comment if comment else '')
     return dumps(review_service.review_to_dict(review))
 
 
