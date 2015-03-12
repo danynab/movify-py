@@ -88,6 +88,8 @@ def init():
     user_dani = user_service.signup('dani', 'dani', 'dani@movify.es')
     user_david = user_service.signup('david', 'david', 'david@movify.es')
     user_marco = user_service.signup('marco', 'marco', 'marco@movify.es')
+    user_paco = user_service.signup('paco', 'paco', 'paco@movify.es')
+    user_pepe = user_service.signup('pepe', 'pepe', 'pepe@movify.es')
 
     for subscription in data.subscriptions:
         subscription_service.save(
@@ -143,7 +145,24 @@ def init():
                                   'interdum nisl. Morbi ullamcorper odio porttitor, interdum lacus non, viverra mi. '
                                   'Ut ut congue libero. In fringilla orci ligula, mattis viverra lorem pulvinar sit '
                                   'amet. Vestibulum et mi massa.')
+
         review_service.rate_movie(movie_saved, user_marco, random.randint(0, 10),
+                                  'Sed sit amet semper nisl. Proin eget lorem ut felis auctor rutrum in a lectus. '
+                                  'Aenean eget lacinia elit. Nulla molestie risus a diam posuere, sit amet interdum '
+                                  'ipsum tempor. Nunc ac vehicula sem. Ut tincidunt libero leo, a accumsan nulla '
+                                  'iaculis ac. Nunc volutpat tempor justo et pellentesque. Aenean lorem metus, '
+                                  'hendrerit at velit sed, euismod porttitor eros. Curabitur elementum felis mauris, '
+                                  'in condimentum mauris placerat eget. Aliquam pellentesque ipsum quis consectetur '
+                                  'aliquet.')
+
+        review_service.rate_movie(movie_saved, user_paco, random.randint(0, 10),
+                                  'Proin congue tincidunt orci, fringilla maximus urna rutrum in. Duis elementum '
+                                  'ultrices scelerisque. Praesent ante est, vestibulum in nulla vel, dignissim '
+                                  'interdum nisl. Morbi ullamcorper odio porttitor, interdum lacus non, viverra mi. '
+                                  'Ut ut congue libero. In fringilla orci ligula, mattis viverra lorem pulvinar sit '
+                                  'amet. Vestibulum et mi massa.')
+
+        review_service.rate_movie(movie_saved, user_pepe, random.randint(0, 10),
                                   'Sed sit amet semper nisl. Proin eget lorem ut felis auctor rutrum in a lectus. '
                                   'Aenean eget lacinia elit. Nulla molestie risus a diam posuere, sit amet interdum '
                                   'ipsum tempor. Nunc ac vehicula sem. Ut tincidunt libero leo, a accumsan nulla '
