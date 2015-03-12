@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+{% block title %}Web Player - Movify{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='icons/flaticon.css') }}">
+<link href="{{ url_for('static', filename='css/star-rating.min.css') }}" media="all" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/webplayer.css') }}">
+{% endblock %}
+{% block body %}
+<nav>
+    <h1><a href="{{ url_for('show_webplayer') }}"><img class="img-responsive"
+                                                       src="{{ url_for('static', filename='images/logo.png') }}"
+                                                       alt="Movify logo"/>Movify</a></h1>
+    <ul>
+        <li><a href="#" id="search-link" class="flaticon-magnifying47"><span class="nav-next">Search</span></a></li>
+        <li><a href="#" id="browse-link" class="flaticon-drawer4 page-link active" data-page="browse"><span
+                class="nav-next">Browse</span></a></li>
+        <li><a href="#" class="flaticon-confirm1 page-link" data-page="your-movies"><span
+                class="nav-next">Your movies</span></a></li>
+        <li><a href="#" class="flaticon-people38 page-link" data-page="follow"><span class="nav-next">Follow</span></a>
+        </li>
+        <li><a href="#" id="back-link" class="flaticon-left216 hidden" data-page="follow"><span
+                class="nav-next">Back</span></a></li>
+    </ul>
+</nav>
+
+<div id="search" class="closed">
+    <div class="search-form">
+        <input type="text" placeholder="Type something..."/>
+    </div>
+    <div class="search-content">
+        <span class="flaticon-magnifying47"></span>
+
+        <h2>Find your favourite movies</h2>
+
+        <p>Search for title, director, writers and stars.</p>
+    </div>
+</div>
+
+<div id="movie-background" class="img-cover"
+     style="background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('');"></div>
+
+<div id="content">
+    <section id="browse" class="page current">
+        <div class="page-content container">
+            <h2>Browse</h2>
+
+            <div id="discover">
+                <h3>Discover what's new</h3>
+
+                <div class="row">
+                    {% for movie in movies %}
+                    <div class="col-md-2 col-sm-4 movie" data-movie-id="{{ movie.id }}">
+                        <div class="cover">
+                            <img class="img-responsive" src="{{ movie.cover }}"/>
+                        </div>
+                        <div class="info">
+                            <p>{{ movie.description }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div id="recomendations">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="recomendation">
+                            <img class="img-responsive" src="{{ url_for('static', filename='images/stars.jpg') }}"
+                                 alt="Stars portraits"/>
+                            <h4>We have them all</h4>
+
+                            <p>Killers, scientists, clerks... Anything you want!</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="recomendation">
+                            <img class="img-responsive" src="{{ url_for('static', filename='images/sitges.jpg') }}"
+                                 alt="Sitges logo"/>
+                            <h4>Sitges</h4>
+
+                            <p>Stay tuned to Sitges official selection</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="recomendation">
+                            <img class="img-responsive" src="{{ url_for('static', filename='images/terror.jpg') }}"
+                                 alt="Terror movies covers"/>
+                            <h4>Terror selection</h4>
+
+                            <p>Are you a tough guy? What our selection of terror movies.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="genres">
+                <h3>Genres</h3>
+
+                <div class="row">
+                    {% for genre in genres %}
+                    <div class="col-md-2 col-sm-3 genre">
+                        <div class="img-cover"
+                             style="background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('{{ genre.image }}') no-repeat center center;">
+                            <h4><a href="#" data-genre="{{ genre.name }}">{{ genre.name }}</a></h4>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="movies" class="page">
+        <div class="page-content container">
+            <h2>Billboard</h2>
+
+            <div class="row"></div>
+        </div>
+    </section>
+
+    <section id="your-movies" class="page">
+        <div class="page-content container">
+            <h1>Your movies</h1>
+        </div>
+    </section>
+
+    <section id="follow" class="page">
+        <div class="page-content container">
+            <h1>Follow</h1>
+        </div>
+    </section>
+
+    <section id="details" class="page">
+        <div class="page-content container">
+            <div class="row">
+                <div class="col-md-3 col-sm-4">
+                    <img class="img-responsive cover" class="img-responsive" alt="Movie cover"/>
+                </div>
+                <div class="col-md-9 col-sm-8">
+                    <h1 class="title"></h1>
+
+                    <div id="movie-rating"></div>
+                    <p class="genres"></p>
+
+                    <p class="year"></p>
+
+                    <p class="duration"></p>
+
+                    <div class="buttons">
+                        <button class="btn btn-green movie-link">Play</button>
+                        <button class="btn btn-grey trailer-link">Play Trailer</button>
+                    </div>
+
+                    <p><span class="label">Director</span><span class="director"></span></p>
+
+                    <p><span class="label">Writers</span><span class="writers"></span></p>
+
+                    <p><span class="label">Stars</span><span class="stars"></span></p>
+                </div>
+            </div>
+            <div class="row storyline"></div>
+
+            <h2>Your review</h2>
+
+            <div id="user-review-container"></div>
+            <div id="your-review"></div>
+
+            <h2>Users reviews</h2>
+
+            <div class="row reviews"></div>
+        </div>
+    </section>
+
+    <section id="player" class="page">
+        <div class="page-content container">
+            <h1 class="title"></h1>
+            <video width="320" height="240" controls>
+                <source src="" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </section>
+</div>
+{% endblock body %}
+{% block js %}
+<script src="{{ url_for('static', filename='js/star-rating.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/webplayer.js') }}"></script>
+{% endblock %}

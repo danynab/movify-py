@@ -9,7 +9,7 @@ def get(name):
 
 
 def get_all():
-    return Genre.query.all()
+    return Genre.query.order_by(Genre.name).all()
 
 
 def save(genre):

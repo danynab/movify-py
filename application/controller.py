@@ -101,8 +101,8 @@ def init():
 
     for genre in data.genres:
         genre_service.save(
-            name=genre["name"],
-            image='http://156.35.95.67/movify/static/genres/' + genre["image"]
+            name=genre['name'],
+            image='http://156.35.95.67/movify/static/genres/' + genre['image']
         )
 
     for movie in data.movies:
@@ -219,11 +219,11 @@ def do_signup():
     email = request.form['email']
     confirm_email = request.form['confirm_email']
     if username.__len__() == 0:
-        return "Username can not be empty"
+        return 'Username can not be empty'
     if password.__len__() == 0:
-        return "Password can not be empty"
+        return 'Password can not be empty'
     if email.__len__() == 0:
-        return "Email can not be empty"
+        return 'Email can not be empty'
     if email == confirm_email:
         user = user_service.signup(username, password, email)
         if user is not None:
@@ -231,9 +231,9 @@ def do_signup():
             session[SESSION_ID_KEY] = session_id
             session[USERNAME_KEY] = user.username
             return redirect(url_for('index'))
-        return "Username already registered"
+        return 'Username already registered'
     else:
-        return "Emails not equals"
+        return 'Emails not equals'
 
 
 # Account
@@ -246,12 +246,12 @@ def show_account():
     user = user_service.get(username)
     expiration = user.expiration
     expiration_date = datetime.fromtimestamp(expiration / 1000)
-    expiration_date_str = expiration_date.strftime("%b %d, %Y")
+    expiration_date_str = expiration_date.strftime('%b %d, %Y')
     return render_template('account.html',
                            subscriptions=subscriptions,
-                           user={"username": user.username,
-                                 "expiration": user.expiration,
-                                 "expiration_str": expiration_date_str},
+                           user={'username': user.username,
+                                 'expiration': user.expiration,
+                                 'expiration_str': expiration_date_str},
                            today_millis=int(time() * 1000))
 
 
@@ -303,7 +303,7 @@ def _get_cajastur_payment_data(subscription, return_url, cancel_url):
     description = 'Movify ' + subscription.name + ' subscription'
     payment_data = cajastur_payment(operation, price, description, return_url, cancel_url)
     session[MONTHS_KEY] = subscription.months
-    session[CAJASTUR_ID_KEY] = _to_md5(payment_data["signature"])
+    session[CAJASTUR_ID_KEY] = _to_md5(payment_data['signature'])
     return payment_data
 
 
@@ -338,7 +338,7 @@ def proccess_cajastur_payment():
 # Movies
 
 @app.route(prefix + '/movies', methods=['GET'])
-# @login_required
+@login_required
 def find_movies():
     search = request.args.get('search')
     if search is None:
@@ -349,12 +349,11 @@ def find_movies():
 
 
 @app.route(prefix + '/movies/<int:movie_id>', methods=['GET'])
-# @login_required
+@login_required
 def get_movie(movie_id):
     movie = movie_service.get(movie_id)
-    users = user_service.get_all()
-    user = users[users.__len__() - 1]
-    review = review_service.get_by_movie_id_and_username(movie_id, user.username)
+    username = session[USERNAME_KEY]
+    review = review_service.get_by_movie_id_and_username(movie_id, username)
     movie_dict = movie_service.movie_to_dict(movie)
     if review is not None:
         movie_dict['userReview'] = review_service.review_to_dict(review)
@@ -362,13 +361,12 @@ def get_movie(movie_id):
 
 
 @app.route(prefix + '/movies/<int:movie_id>/reviews', methods=['POST'])
-# @login_required
+@login_required
 def rate_movie(movie_id):
-    request.get_json()['comment']
     comment = request.get_json()['comment']
     rating = request.get_json()['rating']
-    users = user_service.get_all()
-    user = users[users.__len__() - 1]
+    username = session[USERNAME_KEY]
+    user = user_service.get(username)
     movie = movie_service.get(movie_id)
     review = review_service.rate_movie(user, movie, float(rating if rating else 0), comment if comment else '')
     return dumps(review_service.review_to_dict(review))
@@ -376,25 +374,35 @@ def rate_movie(movie_id):
 
 # Genres
 
-@app.route(prefix + '/genres', methods=["GET"])
-# @login_required
+@app.route(prefix + '/genres', methods=['GET'])
+@login_required
 def find_genres():
     genres = genre_service.get_all()
     return dumps(genre_service.genres_to_dicts(genres, add_movies=False))
 
 
-@app.route(prefix + '/genres/<genre_name>', methods=["GET"])
-# @login_required
+@app.route(prefix + '/genres/<genre_name>', methods=['GET'])
+@login_required
 def get_genre(genre_name):
     genre = genre_service.get(genre_name)
     return dumps(genre_service.genre_to_dict(genre))
 
 
 @app.route(prefix + '/genres/<genre_name>/movies', methods=['GET'])
-# @login_required
+@login_required
 def find_movies_by_genre(genre_name):
     movies = genre_service.get_movies(genre_name)
     return dumps(movie_service.movies_to_dicts(movies))
+
+
+# WebPlayer
+
+@app.route(prefix + '/webplayer', methods=['GET'])
+@login_required
+def show_webplayer():
+    movies = movie_service.get_recents(6)
+    genres = genre_service.get_all()
+    return render_template('webplayer.html', movies=movies, genres=genres)
 
 
 # UTIL

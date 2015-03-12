@@ -20,18 +20,27 @@ margin-left: 20px;
 .flaticon-drawer4:before {
 	content: "\e001";
 }
-.flaticon-magnifying47:before {
+
+.flaticon-left216:before {
 	content: "\e002";
 }
-.flaticon-paper45:before {
+
+.flaticon-magnifying47:before {
 	content: "\e003";
 }
-.flaticon-people38:before {
+
+.flaticon-paper45:before {
 	content: "\e004";
 }
-.flaticon-reminder4:before {
+
+.flaticon-people38:before {
 	content: "\e005";
 }
-.flaticon-settings18:before {
+
+.flaticon-reminder4:before {
 	content: "\e006";
+}
+
+.flaticon-settings18:before {
+    content: "\e007";
 }

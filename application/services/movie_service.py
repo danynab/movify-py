@@ -13,6 +13,10 @@ def get_all():
     return movie_persistence.get_all()
 
 
+def get_recents(count):
+    return movie_persistence.get_recents(count)
+
+
 def search(text):
     return movie_persistence.search(text)
 

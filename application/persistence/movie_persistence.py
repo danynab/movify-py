@@ -1,5 +1,6 @@
 from application import db
 from application.model.movie import Movie
+from sqlalchemy import desc
 
 __author__ = 'Dani Meana'
 
@@ -10,6 +11,10 @@ def get(movie_id):
 
 def get_all():
     return Movie.query.all()
+
+
+def get_recents(count):
+    return Movie.query.order_by(desc(Movie.id)).limit(count)
 
 
 def search(text):

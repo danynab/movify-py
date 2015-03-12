@@ -138,9 +138,9 @@ form input[type="submit"]:hover {
 }
 
 .green-button:hover {
+  background-color: #1ed760;
     text-decoration: none;
     color: white;
-  background-color: #1ed760;
 }
 
 #hero p > a {
