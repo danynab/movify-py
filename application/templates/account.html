@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% block title %}Account overview - Movify{% endblock %}
 {% block body %}
-{% include "header.html" ignore missing %}
 
 <script type=text/javascript>
     var paypalLinkClicked = false;
@@ -60,6 +59,33 @@
     });
 
 </script>
+
+<header>
+    <nav>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Movify logo"/>
+
+                    <h1>Movify</h1>
+                </div>
+                <div class="col-sm-8">
+                    <ul>
+                        {% if not session.username %}
+                        <li><a href="{{ url_for('show_signup') }}">Subscribe</a></li>
+                        <li>Help</li>
+                        <li><a href="{{ url_for('show_login') }}">Log in</a></li>
+                        {% else %}
+                        <li><a href="{{ url_for('index') }}">Home</a></li>
+                        <li>Help</li>
+                        <li><a href="{{ url_for('do_logout') }}">Log out</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
 
 <div class="parallax-window medium" data-parallax="scroll"
      data-image-src="{{ url_for('static', filename='images/parallax/gradient.jpg') }}">
