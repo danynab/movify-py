@@ -17,7 +17,19 @@ __author__ = 'Dani Meana'
 SESSION_ID_KEY = 'session_id'
 USERNAME_KEY = 'username'
 PAYPAL_ID_KEY = 'paypal_id'
+CAJASTUR_ID_KEY = 'cajastur_id'
 MONTHS_KEY = 'months'
+
+
+def _to_md5(string):
+    return hashlib.md5(string.encode('utf')).hexdigest()
+
+
+def _calculate_session_id():
+    ip = g.get('ip', '')
+    user_agent = g.get('user_agent', '')
+    session_id_str = ip + user_agent
+    return _to_md5(_to_md5(session_id_str))
 
 
 def login_required(f):
@@ -33,17 +45,6 @@ def login_required(f):
         return redirect(url_for('show_login'))
 
     return decorated_function
-
-
-def _calculate_session_id():
-    ip = g.get('ip', '')
-    user_agent = g.get('user_agent', '')
-    session_id_str = ip + user_agent
-    return _to_md5(_to_md5(session_id_str))
-
-
-def _to_md5(string):
-    return hashlib.md5(string.encode('utf')).hexdigest()
 
 
 def _generate_product_name(months):
@@ -154,6 +155,7 @@ def do_login():
     user = user_service.login(username, password)
     if user is not None:
         session_id = _calculate_session_id()
+        print(SESSION_ID_KEY)
         session[SESSION_ID_KEY] = session_id
         session[USERNAME_KEY] = username
         return redirect(url_for('index'))
@@ -263,8 +265,10 @@ def _get_cajastur_payment_data(subscription, return_url, cancel_url):
     operation = _generate_product_name(subscription.months)
     price = subscription.price
     description = 'Movify ' + subscription.name + ' subscription'
+    payment_data = cajastur_payment(operation, price, description, return_url, cancel_url)
     session[MONTHS_KEY] = subscription.months
-    return cajastur_payment(operation, price, description, return_url, cancel_url)
+    session[CAJASTUR_ID_KEY] = _to_md5(payment_data["signature"])
+    return payment_data
 
 
 @app.route(prefix + '/account/subscription/paypal')
@@ -286,10 +290,12 @@ def proccess_paypal_payment():
 @app.route(prefix + '/account/subscription/cajastur')
 @login_required
 def proccess_cajastur_payment():
+    cajastur_id = session[CAJASTUR_ID_KEY]
     months = session[MONTHS_KEY]
     session.pop(MONTHS_KEY)
     username = session[USERNAME_KEY]
-    user_service.increase_expiration(username, months)
+    if cajastur_id is not None:
+        user_service.increase_expiration(username, months)
     return redirect(url_for('show_account'))
 
 
