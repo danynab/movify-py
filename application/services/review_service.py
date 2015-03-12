@@ -8,6 +8,10 @@ def get_by_movie_id(movie_id):
     return review_persistence.get_by_movie_id(movie_id)
 
 
+def get_by_movie_id_and_username(movie_id, username):
+    return review_persistence.get_by_movie_id_and_username(movie_id, username)
+
+
 def rate_movie(user, movie, rating, comment):
     review = Review(user, movie, rating, comment)
     review_persistence.save(review)

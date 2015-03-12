@@ -352,7 +352,13 @@ def find_movies():
 # @login_required
 def get_movie(movie_id):
     movie = movie_service.get(movie_id)
-    return dumps(movie_service.movie_to_dict(movie))
+    users = user_service.get_all()
+    user = users[users.__len__() - 1]
+    review = review_service.get_by_movie_id_and_username(movie_id, user.username)
+    movie_dict = movie_service.movie_to_dict(movie)
+    if review is not None:
+        movie_dict['userReview'] = review_service.review_to_dict(review)
+    return dumps(movie_dict)
 
 
 @app.route(prefix + '/movies/<int:movie_id>/reviews', methods=['POST'])
