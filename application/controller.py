@@ -10,6 +10,7 @@ from flask import redirect, request, render_template, url_for, session, g
 from application.services import user_service, movie_service, review_service, subscription_service, genre_service
 import hashlib
 import random
+from werkzeug.utils import escape
 
 
 __author__ = 'Dani Meana'
@@ -200,12 +201,11 @@ def show_login():
 
 @app.route(prefix + '/login', methods=['POST'])
 def do_login():
-    username = request.form['username']
+    username = escape(request.form['username'])
     password = request.form['password']
     user = user_service.login(username, password)
     if user is not None:
         session_id = _calculate_session_id()
-        print(SESSION_ID_KEY)
         session[SESSION_ID_KEY] = session_id
         session[USERNAME_KEY] = username
         return redirect(url_for('index'))
@@ -228,10 +228,10 @@ def show_signup():
 
 @app.route(prefix + '/signup', methods=['POST'])
 def do_signup():
-    username = request.form['username']
+    username = escape(request.form['username'])
     password = request.form['password']
-    email = request.form['email']
-    confirm_email = request.form['confirm_email']
+    email = escape(request.form['email'])
+    confirm_email = escape(request.form['confirm_email'])
     if username.__len__() == 0:
         return 'Username can not be empty'
     if password.__len__() == 0:
@@ -354,7 +354,7 @@ def proccess_cajastur_payment():
 @app.route(prefix + '/movies', methods=['GET'])
 @login_required
 def find_movies():
-    search = request.args.get('search')
+    search = escape(request.args.get('search'))
     if search is None:
         movies = movie_service.get_all()
     else:
@@ -377,8 +377,8 @@ def get_movie(movie_id):
 @app.route(prefix + '/movies/<int:movie_id>/reviews', methods=['POST'])
 @login_required
 def rate_movie(movie_id):
-    comment = request.get_json()['comment']
-    rating = request.get_json()['rating']
+    comment = escape(request.get_json()['comment'])
+    rating = escape(request.get_json()['rating'])
     username = session[USERNAME_KEY]
     user = user_service.get(username)
     movie = movie_service.get(movie_id)
@@ -419,12 +419,3 @@ def show_webplayer():
     all_movies = movie_service.get_all()
     genres = genre_service.get_all()
     return render_template('webplayer.html', random_movies=random_movies, all_movies=all_movies, genres=genres)
-
-
-# UTIL
-
-@app.route(prefix + '/util', methods=['GET'])
-@login_required
-def show_util():
-    movies = movie_service.get_all()
-    return render_template('util.html', movies=movies)
