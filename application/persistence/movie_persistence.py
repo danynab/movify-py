@@ -12,8 +12,12 @@ def get_all():
     return Movie.query.all()
 
 
-def find_by_title(title):
-    return Movie.query.filter(Movie.title.ilike('%' + title + '%')).all()
+def search(text):
+    condition = '%' + text + '%'
+    return Movie.query.filter(Movie.title.ilike(condition) |
+                              Movie.director.ilike(condition) |
+                              Movie.writers.ilike(condition) |
+                              Movie.stars.ilike(condition)).all()
 
 
 def save(movie):

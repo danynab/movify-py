@@ -339,11 +339,11 @@ def proccess_cajastur_payment():
 @app.route(prefix + '/movies', methods=['GET'])
 # @login_required
 def find_movies():
-    title = request.args.get('title')
-    if title is None:
+    search = request.args.get('search')
+    if search is None:
         movies = movie_service.get_all()
     else:
-        movies = movie_service.find_by_title(title)
+        movies = movie_service.search(search)
     return dumps(movie_service.movies_to_dicts(movies))
 
 

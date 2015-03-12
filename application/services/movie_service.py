@@ -13,8 +13,8 @@ def get_all():
     return movie_persistence.get_all()
 
 
-def find_by_title(title):
-    return movie_persistence.find_by_title(title)
+def search(text):
+    return movie_persistence.search(text)
 
 
 def save(title, year, duration, genres, description, storyline, director, writers, stars, cover, background, movie,
