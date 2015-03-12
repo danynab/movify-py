@@ -155,21 +155,29 @@ def init():
                                   'in condimentum mauris placerat eget. Aliquam pellentesque ipsum quis consectetur '
                                   'aliquet.')
 
-        review_service.rate_movie(movie_saved, user_paco, random.randint(0, 10),
-                                  'Proin congue tincidunt orci, fringilla maximus urna rutrum in. Duis elementum '
-                                  'ultrices scelerisque. Praesent ante est, vestibulum in nulla vel, dignissim '
-                                  'interdum nisl. Morbi ullamcorper odio porttitor, interdum lacus non, viverra mi. '
-                                  'Ut ut congue libero. In fringilla orci ligula, mattis viverra lorem pulvinar sit '
-                                  'amet. Vestibulum et mi massa.')
-
         review_service.rate_movie(movie_saved, user_pepe, random.randint(0, 10),
-                                  'Sed sit amet semper nisl. Proin eget lorem ut felis auctor rutrum in a lectus. '
-                                  'Aenean eget lacinia elit. Nulla molestie risus a diam posuere, sit amet interdum '
-                                  'ipsum tempor. Nunc ac vehicula sem. Ut tincidunt libero leo, a accumsan nulla '
-                                  'iaculis ac. Nunc volutpat tempor justo et pellentesque. Aenean lorem metus, '
-                                  'hendrerit at velit sed, euismod porttitor eros. Curabitur elementum felis mauris, '
-                                  'in condimentum mauris placerat eget. Aliquam pellentesque ipsum quis consectetur '
-                                  'aliquet.')
+                                  'Praesent ultrices, nulla vitae consectetur imperdiet, nulla purus condimentum elit, '
+                                  'ac facilisis nisi ligula commodo purus. Duis eget metus mi. Pellentesque habitant '
+                                  'morbi tristique senectus et netus et malesuada fames ac turpis egestas. '
+                                  'Pellentesque quis efficitur lectus. In aliquam arcu mi, lacinia pretium quam '
+                                  'posuere at. Praesent molestie, sapien eu lacinia tristique, enim nunc aliquet '
+                                  'lacus, et porttitor ligula dui id felis. Sed risus mauris, scelerisque vel sapien '
+                                  'et, mattis cursus est. In ornare tellus nulla, at dignissim libero porta id. Cum '
+                                  'sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. '
+                                  'Sed sed feugiat dui. Maecenas ultrices ipsum ac dignissim rutrum. Proin consequat '
+                                  'massa metus, et pretium metus gravida vitae. Donec purus dolor, ultricies euismod '
+                                  'tincidunt sed, luctus id quam. Mauris hendrerit tristique ante, posuere vulputate '
+                                  'nisl gravida sed. Aliquam sit amet risus quis ligula vulputate semper. Aenean '
+                                  'volutpat tellus nec nunc consequat, eget feugiat tortor placerat.')
+
+        review_service.rate_movie(movie_saved, user_paco, random.randint(0, 10),
+                                  'Proin non felis at tellus consequat viverra at ut nisl. In laoreet, tellus id '
+                                  'feugiat maximus, libero dolor sagittis purus, vel dignissim libero erat quis '
+                                  'turpis. Vestibulum tincidunt lobortis eleifend. Sed sit amet rutrum leo, quis '
+                                  'luctus metus. Morbi rhoncus mauris vel auctor consequat. Vestibulum ante ipsum '
+                                  'primis in faucibus orci luctus et ultrices posuere cubilia Curae; Ut sed venenatis '
+                                  'turpis. Proin fermentum tellus ac congue tristique. Sed luctus porttitor nisi, ut '
+                                  'laoreet elit congue egestas')
 
     return redirect(url_for('index'))
 
