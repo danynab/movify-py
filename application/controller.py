@@ -87,6 +87,24 @@ def print_ip():
     g.user_agent = user_agent
 
 
+@app.errorhandler(404)
+@app.errorhandler(403)
+@app.errorhandler(405)
+@app.errorhandler(410)
+def page_not_found(error=None):
+    if error is not None:
+        print('ERROR: ' + str(error))
+    return render_template('404.html'), 404
+
+
+@app.errorhandler(500)
+@app.errorhandler(Exception)
+def all_exception_handler(error=None):
+    if error is not None:
+        print('ERROR: ' + str(error))
+    return render_template('500.html'), 500
+
+
 @app.route(prefix + '/', methods=['GET'])
 def index():
     return render_template('index.html')
@@ -210,7 +228,7 @@ def do_login():
         session[USERNAME_KEY] = username
         return redirect(url_for('index'))
     else:
-        return redirect(url_for('show_login'))
+        return redirect(url_for('show_signup'))
 
 
 @app.route(prefix + '/logout', methods=['GET'])
@@ -275,7 +293,7 @@ def generate_cajastur_payment_data():
     months = request.args.get('months', 0, type=int)
     subscription = subscription_service.get_by_months(months)
     if subscription is None:
-        return redirect(url_for('index'))
+        return page_not_found()
     else:
         return_url = 'http://156.35.95.67/movify/account/subscription/cajastur'
         cancel_url = 'http://156.35.95.67/movify/account'
@@ -289,7 +307,7 @@ def generate_paypal_payment_data():
     months = request.args.get('months', 0, type=int)
     subscription = subscription_service.get_by_months(months)
     if subscription is None:
-        return redirect(url_for('index'))
+        return page_not_found()
     else:
         return_url = 'http://156.35.95.67/movify/account/subscription/paypal'
         cancel_url = 'http://156.35.95.67/movify/account'
@@ -367,6 +385,8 @@ def find_movies():
 @login_required
 def get_movie(movie_id):
     movie = movie_service.get(movie_id)
+    if movie is None:
+        return page_not_found()
     username = session[USERNAME_KEY]
     review = review_service.get_by_movie_id_and_username(movie_id, username)
     movie_dict = movie_service.movie_to_dict(movie)
@@ -383,6 +403,8 @@ def rate_movie(movie_id):
     username = session[USERNAME_KEY]
     user = user_service.get(username)
     movie = movie_service.get(movie_id)
+    if movie is None:
+        return page_not_found()
     review = review_service.rate_movie(user, movie, float(rating if rating else 0), comment if comment else '')
     return dumps(review_service.review_to_dict(review))
 
@@ -400,12 +422,17 @@ def find_genres():
 @login_required
 def get_genre(genre_name):
     genre = genre_service.get(genre_name)
+    if genre is None:
+        return page_not_found()
     return dumps(genre_service.genre_to_dict(genre))
 
 
 @app.route(prefix + '/genres/<genre_name>/movies', methods=['GET'])
 @login_required
 def find_movies_by_genre(genre_name):
+    genre = genre_service.get(genre_name)
+    if genre is None:
+        return page_not_found()
     movies = genre_service.get_movies(genre_name)
     return dumps(movie_service.movies_to_dicts(movies))
 

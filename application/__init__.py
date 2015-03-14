@@ -9,7 +9,7 @@ prefix = '/movify'
 
 app = Flask(__name__, static_path=prefix + '/static')
 app.secret_key = os.urandom(24)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/movify.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///movify.db'
 cors = CORS(app, resources=r'*', allow_headers='Content-Type')
 db = SQLAlchemy(app)
 

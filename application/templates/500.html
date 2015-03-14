@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}500 - Movify{% endblock %}
+{% block body %}
+<header id="login-header">
+    <img src="{{ url_for('static', filename='images/logo-black.png') }}" alt="Movify logo"/>
+
+    <h1><a href="{{ url_for('index') }}">Movify</a></h1>
+</header>
+
+<div class="container" style="text-align: center">
+    <h1>Ooops! Something have failed</h1>
+
+    <p>What have you done? We told you not to touch that!</p>
+
+    <p>Nor that...</p>
+
+    <p>Oh yeah, and that thing...</p>
+
+    <p>Have you touched that? And failed?</p>
+
+    <p>Ok, give us some time. We'll try to solve the problems.</p>
+
+    <p>In the meanwhile you can try to go back to the <a href="{{ url_for('index') }}" class="green">home page</a> or
+        spend your day
+        on <a href="http://www.youtube.com" class="green">Youtube</a> while we fix this.</p>
+
+    <p>See ya!</p>
+</div>
+{% endblock body %}
