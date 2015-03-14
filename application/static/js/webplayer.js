@@ -250,6 +250,7 @@ function submitReview() {
 }
 
 function addReviewForm() {
+    $('#your-review').html('');
     var form = '<textarea id="user-review" type="text"></textarea>';
     form += '<div class="row">';
     form += '  <div class="col-sm-7">';

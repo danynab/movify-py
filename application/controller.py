@@ -342,6 +342,7 @@ def proccess_paypal_payment():
 def proccess_cajastur_payment():
     cajastur_id = session[CAJASTUR_ID_KEY]
     months = session[MONTHS_KEY]
+    session.pop(CAJASTUR_ID_KEY)
     session.pop(MONTHS_KEY)
     username = session[USERNAME_KEY]
     if cajastur_id is not None:
