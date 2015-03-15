@@ -43,6 +43,15 @@
     <div class="container">
         {% if today_millis > user.expiration %}
         <h3>Choose your plan</h3>
+        {% with errors = get_flashed_messages(category_filter=["error"]) %}
+        {% if errors %}
+        <div class="alert danger">
+            {% for msg in errors %}
+            <p>{{ msg }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
 
         <p class="lead">You haven't got an active subscription. Choose one below.</p>
 
