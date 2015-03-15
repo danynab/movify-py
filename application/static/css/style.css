@@ -280,6 +280,24 @@ footer p {
   z-index: 0 !important;
 }
 
+.alert {
+    border-radius: 5px;
+    margin-bottom: 1em;
+    padding: 1em;
+}
+
+.alert.danger {
+    background-color: #fdd;
+}
+
+.alert.success {
+    background-color: #d1ffd0;
+}
+
+div.alert p {
+    margin: 0;
+}
+
 @media (min-width: 768px) {
   section.box .col-md-7 {
     width: 58.33333333%;

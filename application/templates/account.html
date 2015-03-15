@@ -50,6 +50,25 @@
 
         {% else %}
         <h3>Upgrade your plan</h3>
+        {% with errors = get_flashed_messages(category_filter=["error"]) %}
+        {% if errors %}
+        <div class="alert danger">
+            {% for msg in errors %}
+            <p>{{ msg }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        {% with success = get_flashed_messages(category_filter=["success"]) %}
+        {% if success %}
+        <div class="alert success">
+            {% for msg in success %}
+            <p>{{ msg }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
 
         <p class="lead">Your subscription expires on <span class="green">{{ user.expiration_str }}</span>.
 

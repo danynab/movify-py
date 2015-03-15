@@ -6,7 +6,7 @@ from application.payments.paypal import paypal_payment
 from flask.json import dumps
 from functools import wraps
 from application import app, prefix
-from flask import redirect, request, render_template, url_for, session, g
+from flask import redirect, request, render_template, url_for, session, g, flash
 from application.services import user_service, movie_service, review_service, subscription_service, genre_service
 import hashlib
 import random
@@ -227,7 +227,8 @@ def do_login():
         session[USERNAME_KEY] = username
         return redirect(url_for('index'))
     else:
-        return redirect(url_for('show_signup'))
+        flash('Invalid credentials', 'error')
+        return render_template('login.html')
 
 
 @app.route(prefix + '/logout', methods=['GET'])
@@ -250,21 +251,23 @@ def do_signup():
     email = escape(request.form['email'])
     confirm_email = escape(request.form['confirm_email'])
     if username.__len__() == 0:
-        return 'Username can not be empty'
+        flash('Username can not be empty', 'error')
     if password.__len__() == 0:
-        return 'Password can not be empty'
+        flash('Password can not be empty', 'error')
     if email.__len__() == 0:
-        return 'Email can not be empty'
-    if email == confirm_email:
+        flash('Email can not be empty', 'error')
+    if email != confirm_email:
+        flash('Emails not equals', 'error')
+    if username.__len__() != 0 and password.__len__() != 0 and email.__len__() != 0 and email == confirm_email:
         user = user_service.signup(username, password, email)
         if user is not None:
             session_id = _calculate_session_id()
             session[SESSION_ID_KEY] = session_id
             session[USERNAME_KEY] = user.username
             return redirect(url_for('index'))
-        return 'Username already registered'
+        flash('Username already registered', 'error')
     else:
-        return 'Emails not equals'
+        return render_template('signup.html')
 
 
 # Account
@@ -278,6 +281,9 @@ def show_account():
     expiration = user.expiration
     expiration_date = datetime.fromtimestamp(expiration / 1000)
     expiration_date_str = expiration_date.strftime('%b %d, %Y')
+    cancel = request.args.get('cancel')
+    if cancel is not None:
+        flash('Payment canceled', 'error')
     return render_template('account.html',
                            subscriptions=subscriptions,
                            user={'username': user.username,
@@ -295,7 +301,7 @@ def generate_cajastur_payment_data():
         return page_not_found()
     else:
         return_url = 'http://156.35.95.67/movify/account/subscription/cajastur'
-        cancel_url = 'http://156.35.95.67/movify/account'
+        cancel_url = 'http://156.35.95.67/movify/account?cancel'
         cajastur_data = _get_cajastur_payment_data(subscription, return_url, cancel_url)
         return dumps(cajastur_data)
 
@@ -309,7 +315,7 @@ def generate_paypal_payment_data():
         return page_not_found()
     else:
         return_url = 'http://156.35.95.67/movify/account/subscription/paypal'
-        cancel_url = 'http://156.35.95.67/movify/account'
+        cancel_url = 'http://156.35.95.67/movify/account?cancel'
         paypal_data = _get_paypal_payment_data(subscription, return_url, cancel_url)
         return dumps(paypal_data)
 
@@ -341,6 +347,8 @@ def _get_cajastur_payment_data(subscription, return_url, cancel_url):
 @login_required
 def proccess_paypal_payment():
     paypal_id = request.args.get('paymentId')
+    if MONTHS_KEY not in session or paypal_id is None or PAYPAL_ID_KEY not in session:
+        return page_not_found()
     paypal_id_hash = session[PAYPAL_ID_KEY]
     months = session[MONTHS_KEY]
     session.pop(PAYPAL_ID_KEY)
@@ -348,18 +356,21 @@ def proccess_paypal_payment():
     username = session[USERNAME_KEY]
     if paypal_id_hash == _to_md5(paypal_id):
         user_service.increase_expiration(username, months)
+        flash('Subscription extended', 'success')
         return redirect(url_for('show_account'))
     else:
-        return 'FAIL'
-
+        return page_not_found()
 
 @app.route(prefix + '/account/subscription/cajastur')
 @login_required
 def proccess_cajastur_payment():
+    if MONTHS_KEY not in session:
+        return page_not_found()
     months = session[MONTHS_KEY]
     session.pop(MONTHS_KEY)
     username = session[USERNAME_KEY]
     user_service.increase_expiration(username, months)
+    flash('Subscription extended', 'success')
     return redirect(url_for('show_account'))
 
 

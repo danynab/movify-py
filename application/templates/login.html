@@ -7,6 +7,15 @@
 </header>
 
 <div id="form-container" class="container">
+    {% with errors = get_flashed_messages(category_filter=["error"]) %}
+    {% if errors %}
+    <div class="alert danger">
+        {% for msg in errors %}
+        <p>{{ msg }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
     <form method="post" action="{{ url_for('do_login') }}">
         <div class="form-group">
             <input class="form-control" type="text" name="username" placeholder="username" autocomplete="off"
