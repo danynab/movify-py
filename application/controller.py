@@ -18,7 +18,6 @@ __author__ = 'Dani Meana'
 SESSION_ID_KEY = 'session_id'
 USERNAME_KEY = 'username'
 PAYPAL_ID_KEY = 'paypal_id'
-CAJASTUR_ID_KEY = 'cajastur_id'
 MONTHS_KEY = 'months'
 
 
@@ -335,7 +334,6 @@ def _get_cajastur_payment_data(subscription, return_url, cancel_url):
     description = 'Movify ' + subscription.name + ' subscription'
     payment_data = cajastur_payment(operation, price, description, return_url, cancel_url)
     session[MONTHS_KEY] = subscription.months
-    session[CAJASTUR_ID_KEY] = _to_md5(payment_data['signature'])
     return payment_data
 
 
@@ -358,13 +356,10 @@ def proccess_paypal_payment():
 @app.route(prefix + '/account/subscription/cajastur')
 @login_required
 def proccess_cajastur_payment():
-    cajastur_id = session[CAJASTUR_ID_KEY]
     months = session[MONTHS_KEY]
-    session.pop(CAJASTUR_ID_KEY)
     session.pop(MONTHS_KEY)
     username = session[USERNAME_KEY]
-    if cajastur_id is not None:
-        user_service.increase_expiration(username, months)
+    user_service.increase_expiration(username, months)
     return redirect(url_for('show_account'))
 
 
