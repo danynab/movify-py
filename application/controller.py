@@ -428,6 +428,7 @@ def proccess_bitcoin_payment():
 
 @app.route(prefix + '/movies', methods=['GET'])
 @login_required
+@subscription_required
 def find_movies():
     search = escape(request.args.get('search'))
     if search is None:
@@ -439,6 +440,7 @@ def find_movies():
 
 @app.route(prefix + '/movies/<int:movie_id>', methods=['GET'])
 @login_required
+@subscription_required
 def get_movie(movie_id):
     movie = movie_service.get(movie_id)
     if movie is None:
@@ -453,6 +455,7 @@ def get_movie(movie_id):
 
 @app.route(prefix + '/movies/<int:movie_id>/reviews', methods=['POST'])
 @login_required
+@subscription_required
 def rate_movie(movie_id):
     comment = escape(request.get_json()['comment'])
     rating = escape(request.get_json()['rating'])
@@ -469,6 +472,7 @@ def rate_movie(movie_id):
 
 @app.route(prefix + '/genres', methods=['GET'])
 @login_required
+@subscription_required
 def find_genres():
     genres = genre_service.get_all()
     return dumps(genre_service.genres_to_dicts(genres, add_movies=False))
@@ -476,6 +480,7 @@ def find_genres():
 
 @app.route(prefix + '/genres/<genre_name>', methods=['GET'])
 @login_required
+@subscription_required
 def get_genre(genre_name):
     genre = genre_service.get(genre_name)
     if genre is None:
@@ -485,6 +490,7 @@ def get_genre(genre_name):
 
 @app.route(prefix + '/genres/<genre_name>/movies', methods=['GET'])
 @login_required
+@subscription_required
 def find_movies_by_genre(genre_name):
     genre = genre_service.get(genre_name)
     if genre is None:
