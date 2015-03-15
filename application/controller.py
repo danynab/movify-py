@@ -1,6 +1,7 @@
 from datetime import datetime
 from time import time
 
+from application.payments.bitcoin import bitcoin_payment, bitcoin_payment_check
 from application.payments.cajastur import cajastur_payment
 from application.payments.paypal import paypal_payment
 from flask.json import dumps
@@ -18,6 +19,7 @@ __author__ = 'Dani Meana'
 SESSION_ID_KEY = 'session_id'
 USERNAME_KEY = 'username'
 PAYPAL_ID_KEY = 'paypal_id'
+BITCOIN_ID_KEY = 'bitcoin_id'
 MONTHS_KEY = 'months'
 
 
@@ -320,6 +322,30 @@ def generate_paypal_payment_data():
         return dumps(paypal_data)
 
 
+@app.route(prefix + '/_generate_bitcoin_payment_data')
+@login_required
+def generate_bitcoin_payment_data():
+    months = request.args.get('months', 0, type=int)
+    subscription = subscription_service.get_by_months(months)
+    if subscription is None:
+        return page_not_found()
+    else:
+        url = 'http://156.35.95.67/movify/account/subscription/bitcoin'
+        bitcoin_data = _get_bitcoin_payment_data(subscription, url)
+        return dumps(bitcoin_data)
+
+
+def _get_bitcoin_payment_data(subscription, url):
+    price = subscription.price
+    order_number = _generate_product_name(subscription.months)
+    payment_data = bitcoin_payment(price, order_number, url)
+    bitcoin_id = payment_data['id']
+    bitcoin_url = payment_data['url']
+    session[BITCOIN_ID_KEY] = bitcoin_id
+    session[MONTHS_KEY] = subscription.months
+    return {'url': bitcoin_url}
+
+
 def _get_paypal_payment_data(subscription, return_url, cancel_url):
     price = subscription.price
     quantity = '1'
@@ -361,6 +387,7 @@ def proccess_paypal_payment():
     else:
         return page_not_found()
 
+
 @app.route(prefix + '/account/subscription/cajastur')
 @login_required
 def proccess_cajastur_payment():
@@ -372,6 +399,29 @@ def proccess_cajastur_payment():
     user_service.increase_expiration(username, months)
     flash('Subscription extended', 'success')
     return redirect(url_for('show_account'))
+
+
+@app.route(prefix + '/account/subscription/bitcoin')
+@login_required
+def proccess_bitcoin_payment():
+    if MONTHS_KEY not in session or BITCOIN_ID_KEY not in session:
+        return page_not_found()
+    bitcoin_id = session[BITCOIN_ID_KEY]
+    session.pop(BITCOIN_ID_KEY)
+    months = session[MONTHS_KEY]
+    session.pop(MONTHS_KEY)
+    bitcoin_status = bitcoin_payment_check(bitcoin_id)
+    username = session[USERNAME_KEY]
+    if bitcoin_status == 'confirmed':
+        user_service.increase_expiration(username, months)
+        flash('Subscription extended', 'success')
+        return redirect(url_for('show_account'))
+    elif bitcoin_status == 'pending':
+        flash('Payment is pending', 'error')
+        return redirect(url_for('show_account'))
+    else:
+        flash('Payment canceled', 'error')
+        return page_not_found()
 
 
 # Movies
